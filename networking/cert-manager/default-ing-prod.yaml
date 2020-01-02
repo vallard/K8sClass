@@ -1,0 +1,20 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+  name: default-backend
+  namespace: default
+spec:
+  tls:
+  - hosts:
+    - k8s.castlerock.ai
+    secretName: k8s-root-tls
+  backend:
+    serviceName: default-backend
+    servicePort: 80
