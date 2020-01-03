@@ -1,7 +1,3 @@
-# Please edit the object below. Lines beginning with a '#' will be ignored,
-# and an empty file will abort the edit. If an error occurs while saving this file will be
-# reopened with the relevant failures.
-#
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -14,7 +10,18 @@ spec:
   tls:
   - hosts:
     - k8s.castlerock.ai
+    - "*.k8s.castlerock.ai"
     secretName: k8s-root-tls
-  backend:
-    serviceName: default-backend
-    servicePort: 80
+  rules:
+    - host: k8s.castlerock.ai
+      http:
+        paths:
+        - backend:
+            serviceName: default-backend
+            servicePort: 80
+    - host: "*.k8s.castlerock.ai"
+      http:
+        paths:
+        - backend:
+            serviceName: default-backend
+            servicePort: 80
