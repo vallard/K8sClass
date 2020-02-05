@@ -2,6 +2,10 @@
 ## Using Amazon Elastic Kubernetes Service
 Materials Created by me, [@vallard](https://twitter.com/vallard)
 
+### ⚠️ THIS IS A WORK IN PROGRESS AND WILL BE COMPLETE BY FEB 25, 2020. ⚠️
+
+✅ Most of the materials are not yet uploaded but will be soon!
+
 
 ## Contents
 
