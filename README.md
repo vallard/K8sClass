@@ -37,7 +37,7 @@ Materials Created by me, [@vallard](https://twitter.com/vallard)
 
 
 ### Segment 5 - Launch Applications
-* [Persistent Volumes](segment05-apps/PV.md)
+* [Persistent Volumes](segment05-applications/PV.md)
 * Create an Network Loadbalancer for accessing the cluster
 * Configure R53 DNS to point to the ELB
 * Install NGINX ingress controller for TLS certificates
