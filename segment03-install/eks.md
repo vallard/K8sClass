@@ -49,19 +49,40 @@ eksctl create cluster \
 --managed
 ```
 
+(Or run [./createEKSctlCluster.sh](createEKSctlCluster.sh) )
+
 If there are failures it is most likely related to a permission issue of your commandline user. 
 
 You can check the cloud formation console and either roll back or add the permissions. 
 
-This operation takes about 12 minutes. 
-
-Note: In live class we will have one existing cluster and one cluster we start up to show as demo, like a baking class so we don't need to wait for it to come up. 
+This operation takes about 12-15 minutes. 
+ 
 
 ## Create cluster with Cloud Formation
 
 Get [latest template](https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2019-11-15/amazon-eks-vpc-sample.yaml)
 
+## Add Cluster Config to `~/.kube/config`
 
+See which clusters are available using one of the commands below: 
+
+```
+aws eks list-clusters
+eksctl get clusters
+```
+
+Update your `~/.kube/config` file with your clusters
+
+```
+aws eks update-kubeconfig --name <cluster_name>
+```
+
+e.g.:
+
+```
+$ aws eks update-kubeconfig --name eksctl-2-13
+Added new context arn:aws:eks:us-west-2:188966951897:cluster/eksctl-2-13 to /Users/vallard/.kube/config
+```
 
 ## Switch Between clusters
 
@@ -71,13 +92,16 @@ If you already had a cluster then you can still access it.
 kubectl config get-contexts
 ```
 
+
+
+
 You'll see the different contexts.  You can switch between contexts with: 
 
 ```
 kubectl config use-context <context name>
 ```
 
-Now if you are switching with AWS you'll also have to change your IAM back. 
+If you are switching with AWS you'll also have to change your IAM back. 
 
 ```
 export AWS_PROFILE=default
