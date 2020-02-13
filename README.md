@@ -14,7 +14,7 @@ Materials Created by me, [@vallard](https://twitter.com/vallard)
 * Big Picture Overview
 * Clone Github Resources
 * Benefits of Kubernetes on AWS
-* [Install `kubectl`](segment1/kubectl.md)
+* [Install `kubectl`](segment01-intro/kubectl.md)
 
 
 
@@ -36,12 +36,12 @@ Materials Created by me, [@vallard](https://twitter.com/vallard)
 * [Verify components and launch sample test application](segment04-verify/README.md)
 
 
-### Segment 5 - Launch Applications
+### Segment 5 - Running Applications
+* [Loadbalancers](segement05-applications/ELB.md)
+* [Ingress](segment05-applications/Ingress.md)
+* [Configure R53 DNS to point to the ELB](segment05-applications/r53.md)
+* [TLS certificates](segement05-applications/TLS.md)
 * [Persistent Volumes](segment05-applications/PV.md)
-* Create an Network Loadbalancer for accessing the cluster
-* Configure R53 DNS to point to the ELB
-* Install NGINX ingress controller for TLS certificates
-* Access applications secure via https://
 
 ### Segment 5 - Cluster Lifecycle
 * Demonstrate adding additional users to login to cluster

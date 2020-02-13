@@ -1,0 +1,13 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ngx
+spec:
+  rules:
+    - host: k8s.castlerock.ai
+      http:
+        paths:
+        - backend:
+            serviceName: ngx
+            servicePort: 80
