@@ -37,6 +37,14 @@ There are a few ways with Windows [documented here.](https://kubernetes.io/docs/
 * Powershell from PSGallery
 * Chocolatey or Scoop
 
+### Linux
+
+```
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/linux/amd64/kubectl
+mv kubectl /usr/local/bin/
+chmod 755 /usr/local/bin/kubectl
+```
+
 
 ## Testing kubectl 
 

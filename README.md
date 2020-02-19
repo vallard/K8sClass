@@ -29,7 +29,6 @@ Materials Created by me, [@vallard](https://twitter.com/vallard)
 
 ### Segement 3 - Launch EKS
 * [Launch the EKS cluster with eksctl](segment03-install/eks.md)
-* Apply `ConfigMaps` to join nodes to the cluster
 * `kubectl` access
 
 ### Segment 4 - Cluster Verification
@@ -43,15 +42,16 @@ Materials Created by me, [@vallard](https://twitter.com/vallard)
 * [TLS certificates](segement05-applications/TLS.md)
 * [Persistent Volumes](segment05-applications/PV.md)
 
-### Segment 5 - Cluster Lifecycle
-* Demonstrate adding additional users to login to cluster
-* Cluster Autoscaling
-* Upgrading cluster
+### Segment 6 - Cluster Lifecycle
+* [Cluster Autoscaling](segment06-admin/README.md)
+* [Horizontal Pod Autoscaling](segment06-admin/README.md#horizontal-pod-autoscaler)
+* [Kubernetes Dashboard](segment06-admin/README.md#kubernetes-dashboard)
+* [Add additional users to the cluster](segment06-admin/README.md#additional-user-access)
+* [Updating the cluster](segment06-admin/README.md#cluster-upgrades)
 
-### Segment 6 - Connecting to additional AWS services
+### Segment 7 - Connecting to additional AWS services
 * lambda functions to run something on EKS cluster
 * Jobs on EKS access DynamoDB and S3
 
-### Segment 7 - Wrap up and Questions
-* Additional feedback, etc. 
+
 
