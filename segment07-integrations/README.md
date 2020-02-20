@@ -32,7 +32,13 @@ npm install serverless-python-requirements
 
 #### Edit the `serverless.conf` file
 
-Here we need to put in our cluster in the environment variables. 
+Here we need to put in our cluster in the environment variables.
+
+First we need a role that can we can assign to this lambda function to call. 
+
+
+
+
 
 Test locally with: 
 
@@ -50,5 +56,15 @@ sls deploy
 ```
 
 Now we can list our Kubernetes deployments in our cluster with: 
+
+```
+sls invoke -f list
+```
+
+To see logs: 
+
+```
+sls logs -f list
+```
 
 

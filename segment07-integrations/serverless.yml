@@ -3,13 +3,16 @@ provider:
   name: aws
   runtime: python3.7
   environment: 
+    ## Define the name of your EKS cluster you want the lambda function to be able to access
     CLUSTER: "matomo"
-    REGION: "us-east-1"
+  ## define the role that this lambda function will run under.  This role should have access to 
+  ## be able to run kubectl commands. 
+  role: arn:aws:iam::254056899943:role/kubeLambda
 
 custom:
   pythonRequirements:
     useDownloadCache: true
-    useStaticCache: true
+    useStaticCache: false
     dockerizePip: non-linux
     #dockerFile: ./Dockerfile
     zip: true

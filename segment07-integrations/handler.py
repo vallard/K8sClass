@@ -1,3 +1,7 @@
+try:
+  import unzip_requirements
+except ImportError:
+  pass
 import json, os, sys, re
 import base64
 import boto3
@@ -145,7 +149,6 @@ def list_deployments(event, context):
         ret = v1.list_pod_for_all_namespaces(watch=False)
         for i in ret.items:
             pods.append({"ip": i.status.pod_ip, "namespace": i.metadata.namespace, "name": i.metadata.name})
-            #print("{}\t{}\t{}".format(i.status.pod_ip, i.metadata.namespace, i.metadata.name))
 
     except client.rest.ApiException as e: 
         formatted_error(str(e))
