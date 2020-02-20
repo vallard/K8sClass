@@ -1,0 +1,39 @@
+service: EKSless
+provider:
+  name: aws
+  runtime: python3.7
+  environment: 
+    CLUSTER: "matomo"
+    REGION: "us-east-1"
+
+custom:
+  pythonRequirements:
+    useDownloadCache: true
+    useStaticCache: true
+    dockerizePip: non-linux
+    #dockerFile: ./Dockerfile
+    zip: true
+    slim: true
+    slimPatterns:
+      - "**/*.egg-info*"
+
+
+functions:
+  list:
+    handler: handler.list_deployments
+    events:
+      - http:
+          path: list
+          method: get
+          cors: true
+
+  create:
+    handler: handler.create_deployments
+    events:
+      - http:
+          path: list
+          method: post
+          cors: true
+
+plugins:
+  - serverless-python-requirements
