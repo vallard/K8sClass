@@ -15,7 +15,11 @@ As an example in our company we created a [Matomo](https://matomo.org) service. 
 * TLS generation for ingress rules for Matomo
 * Secret files for Matomo for passwords,etc. 
 
-Let's show how we can make this happen. 
+Let's show a quick example of how we made this happen. 
+
+### The example
+
+Our function will simply list all the pods in the cluster.  This is the equivalent of running: `kubectl get pods --all-namespaces`.  Pretty simple, but getting to work in AWS lambda with API Gateway is decidedly not simple!  However, this quick example can make it much easier. 
 
 ### Serverless
 
@@ -23,22 +27,33 @@ The [serverless.com](https://serverless.com) framework allows you to create serv
 
 #### Build the serverless environment. 
 
-The serverless environment is built on node.  If you don't know node then there are lots of places to learn, however this is beyond the scope of this class.    
+The serverless environment is built on node.  If you don't know node then there are lots of places to learn, however this is beyond the scope of this class. Check out [the serverless.com website](https://serverless.com) for instructions on getting started.
 
 ```
 cd segment07*/
 npm install serverless-python-requirements
 ```
 
+#### Make a role we can assign
+
+Our lambda function needs to run as a certain role.  We can define this role and give it all the EKS permissions it needs.  If you need your serverless configuration to have access other resources then you should add to the role as well.  Make note of the role arn. 
+
 #### Edit the `serverless.conf` file
 
-Here we need to put in our cluster in the environment variables.
+We need to update the role to put in the one we just created: 
 
-First we need a role that can we can assign to this lambda function to call. 
-
-
-
-
+```yaml
+service: EKSless
+provider:
+  name: aws
+  runtime: python3.7
+  environment:
+    ## Define the name of your EKS cluster you want the lambda function to be able to access
+    CLUSTER: "<your cluster name here>"
+  ## define the role that this lambda function will run under.  This role should have access to
+  ## be able to run kubectl commands.
+  role: <your role arn:aws:iam::12343455:role/kubeLambda>
+```
 
 Test locally with: 
 
@@ -59,6 +74,12 @@ Now we can list our Kubernetes deployments in our cluster with:
 
 ```
 sls invoke -f list
+```
+
+If you need to update: 
+
+```
+sls deploy -f list
 ```
 
 To see logs: 
