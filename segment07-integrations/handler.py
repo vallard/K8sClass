@@ -56,7 +56,7 @@ headers = {
 }
 
 cluster = os.getenv('CLUSTER', 'matomo')
-region = os.getenv('REGION', 'us-east-1')
+region = os.getenv('REGION', 'us-west-2')
 
 def formatted_error(message, statusCode=400):
     print("error:" , message)

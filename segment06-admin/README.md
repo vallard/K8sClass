@@ -171,6 +171,32 @@ mapUsers: |
 
 This user now has access to the cluster.
 
+We can limit this user to just listing pods by assigning a group to it.  
+
+```
+kubectl apply -f role-binding.yaml
+```
+This creates the `read-pods` user.  By modifying the `configMap` again and changing the groups to the following: 
+
+```
+mapUsers: |
+    - userarn: arn:aws:iam::188966951897:user/anotherUser
+      username: read-pods
+      groups:
+        - read-pods
+```
+We now can make it so this person can only read pods.  
+
+```
+kubectl get pods
+```
+Works!
+
+```
+kubectl get svc
+Error from server (Forbidden): services is forbidden: User "read-pods" cannot list resource "services" in API group "" in the namespace "default"
+```
+
 ## Cluster Upgrades
 
 After a year, you will need to upgrade the cluster.  When we were running 1.11 they actually just turned it off and we were unable to access a month before the stated cut off date.  

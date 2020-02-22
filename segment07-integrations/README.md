@@ -47,6 +47,7 @@ service: EKSless
 provider:
   name: aws
   runtime: python3.7
+  region: us-west-2 # change this to be your region
   environment:
     ## Define the name of your EKS cluster you want the lambda function to be able to access
     CLUSTER: "<your cluster name here>"
@@ -63,6 +64,32 @@ sls invoke local -f list
 
 This should list all your kubernetes pods in the cluster. 
 
+### Add permissions
+
+Your user may not have permissions to access CloudWatch Logs, API Gateway, or Lambda services.  You can create a policy and add to the group.  The `serverless` policy can look as follows: 
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "apigateway:*",
+                "logs:*",
+                "lambda:*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+```
+
+After adding this policy to the `EKSDemoGroup` you should be able to deploy the serverless function. 
+
+### Deploy serverless function
 
 You can then deploy this with: 
 
