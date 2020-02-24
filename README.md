@@ -50,8 +50,8 @@ Materials Created by me, [@vallard](https://twitter.com/vallard)
 * [Updating the cluster](segment06-admin/README.md#cluster-upgrades)
 
 ### Segment 7 - Connecting to additional AWS services
-* lambda functions to run something on EKS cluster
-* Jobs on EKS access DynamoDB and S3
+* [Serverless with EKS](segmenet07-integrations/README.md)
+* [EKS DynamoDB example](segment07-integrations/dynamo-example/README.md)
 
 
 

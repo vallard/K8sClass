@@ -1,6 +1,4 @@
-# Other AWS tricks
-
-## Combine Serverless with Kubernetes
+# Serverless With Kubernetes
 
 We can make our serverless functions work with our Kubernetes cluster.  Why would we want to do that? 
 
@@ -17,7 +15,7 @@ As an example in our company we created a [Matomo](https://matomo.org) service. 
 
 Let's show a quick example of how we made this happen. 
 
-### The example
+## The example
 
 Our function will simply list all the pods in the cluster.  This is the equivalent of running: `kubectl get pods --all-namespaces`.  Pretty simple, but getting to work in AWS lambda with API Gateway is decidedly not simple!  However, this quick example can make it much easier. 
 
