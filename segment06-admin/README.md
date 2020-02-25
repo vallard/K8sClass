@@ -25,9 +25,15 @@ Update the role of the EKS nodes to allow a policy that appears as follows:
 }
 ```
 
+Next add the metrics server so kubernetes can tell what is happening with the nodes: 
 
+```
+cd segment06-admin/
+kubectl apply -f metrics-server-0.3.6/
+```
 
-Install with
+Now install the cluster autoscaler:
+
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/autoscaler/master/cluster-autoscaler/cloudprovider/aws/examples/cluster-autoscaler-autodiscover.yaml
@@ -85,15 +91,11 @@ Will make the nodes scale down and you'll see them go away.
 
 First we need to installt he Metrics server.  This server let's Kubernetes know how much load is on the machines. 
 
+
 ```
 kubectl -n kube-system get deployment/metrics-server
 ```
 
-Verify up: 
-
-```
-kubectl get deployment metrics-server -n kube-system
-```
 
 ### Test HPA
 
@@ -108,6 +110,18 @@ Create the autoscaler for the pod:
 kubectl autoscale deployment httpd --cpu-percent=50 --min=1 --max=10
 kubectl get hpa/httpd
 ```
+Now we can test this hpa
+
+```
+kubectl run apache-bench -i --tty --rm --image=httpd -- ab -n 500000 -c 1000 http://httpd.default.svc.cluster.local/
+```
+
+You can monitor the hpa to see what is reads: 
+
+```
+kubectl get horizontalpodautoscaler.autoscaling/httpd
+```
+
 
 You should see the number of pods increase. 
 
@@ -115,13 +129,13 @@ You should see the number of pods increase.
 
 ```
 kubectl apply –f segment06-admin/dashboard.yaml
-kubectl apply –f segment06-admin/ eks-admin-service-account.yaml
+kubectl apply –f segment06-admin/eks-admin-service-account.yaml
 ```
 
 Get the token from this user: 
 
 ```
-kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}’)
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}')
 ```
 
 Now open the kube proxy to login: 
