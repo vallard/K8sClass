@@ -1,11 +1,11 @@
-service: EKSless
+service: EKSless2
 provider:
   name: aws
   runtime: python3.7
   region: us-west-2
   environment: 
     ## Define the name of your EKS cluster you want the lambda function to be able to access
-    CLUSTER: "2-24"
+    CLUSTER: "2-255"
   ## define the role that this lambda function will run under.  This role should have access to 
   ## be able to run kubectl commands. 
   role: arn:aws:iam::188966951897:role/kubeLambda

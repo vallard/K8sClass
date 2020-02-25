@@ -2,12 +2,16 @@
 ## Using Amazon Elastic Kubernetes Service
 Materials Created by me, [@vallard](https://twitter.com/vallard)
 
-### ⚠️ THIS IS A WORK IN PROGRESS AND WILL BE COMPLETE BY FEB 25, 2020. ⚠️
-
-✅ Most of the materials are not yet uploaded but will be soon!
-
-
 ## Contents
+
+This repo is for a class I teach on using [EKS](https://aws.amazon.com/eks/).  This class assumes you have a basic idea and understanding about: 
+
+* Python
+* AWS
+* Docker
+* Kubernetes - you should know at least a little about it. 
+
+The purpose of the class is to show how to get an EKS cluster up and running and then run some applications.  In the last section we show how to integrate other AWS services (Lambda, DynamoDB) in with our EKS cluster. 
 
 ### Segment 1 - Introduction / Foundations
 * Introduction
