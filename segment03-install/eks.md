@@ -3,12 +3,14 @@
 
 The cost to create an EKS cluster right now is:
 
-| Item | Cost |
-|------------------|-------|
-|EKS Control Plain | $0.20/hr |
-|3 T3 instances | $0.1248/hr |
-| NAT Gateway | $0.045/hr |
-| Total | $0.37/hr |
+| Item | Cost Dec 2019 | Cost Feb 2020 |
+|------------------|-------|---|
+|EKS Control Plain | $0.20/hr | $0.10/hr |
+|3 T3 instances | $0.1248/hr | $0.1248/hr |
+| NAT Gateway | $0.045/hr | $0.045/hr
+| Total | $0.37/hr | $0.27/hr | 
+
+[AWS Source](https://aws.amazon.com/eks/pricing/)
 
 
 

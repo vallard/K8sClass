@@ -11,11 +11,11 @@ This repo is for a class I teach on using [EKS](https://aws.amazon.com/eks/).  T
 * Docker
 * Kubernetes - you should know at least a little about it. 
 
-The purpose of the class is to show how to get an EKS cluster up and running and then run some applications.  In the last section we show how to integrate other AWS services (Lambda, DynamoDB) in with our EKS cluster. 
+The purpose of the class is to show how to get an EKS cluster up and running, do some administration, and then run some applications.  Finally we show how to integrate other AWS services (Lambda, DynamoDB) in with our EKS cluster. 
 
 ### Segment 1 - Introduction / Foundations
-* Introduction
-* Big Picture Overview
+* [Introduction](segment01-intro/INTRO.md)j
+* [Why Containers are a big deal](segment01-intro/containers.md)
 * Clone Github Resources
 * Benefits of Kubernetes on AWS
 * [Install `kubectl`](segment01-intro/kubectl.md)
