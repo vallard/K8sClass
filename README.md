@@ -14,7 +14,7 @@ This repo is for a class I teach on using [EKS](https://aws.amazon.com/eks/).  T
 The purpose of the class is to show how to get an EKS cluster up and running, do some administration, and then run some applications.  Finally we show how to integrate other AWS services (Lambda, DynamoDB) in with our EKS cluster. 
 
 ### Segment 1 - Introduction / Foundations
-* [Introduction](segment01-intro/INTRO.md)j
+* [Introduction](segment01-intro/INTRO.md)
 * [Why Containers are a big deal](segment01-intro/containers.md)
 * [Trade Offs](segment01-intro/tradeoffs.md)
 * Clone Github Resources
