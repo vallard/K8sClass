@@ -16,6 +16,7 @@ The purpose of the class is to show how to get an EKS cluster up and running, do
 ### Segment 1 - Introduction / Foundations
 * [Introduction](segment01-intro/INTRO.md)j
 * [Why Containers are a big deal](segment01-intro/containers.md)
+* [Trade Offs](segment01-intro/tradeoffs.md)
 * Clone Github Resources
 * Benefits of Kubernetes on AWS
 * [Install `kubectl`](segment01-intro/kubectl.md)
