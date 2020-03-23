@@ -18,17 +18,13 @@ The purpose of the class is to show how to get an EKS cluster up and running, do
 * [Why Containers are a big deal](segment01-intro/containers.md)
 * [Trade Offs](segment01-intro/tradeoffs.md)
 * [Kubernetes in a Nutshell](segement01-intro/IANS.md)
-* Clone Github Resources
+* [Clone Github Resources](segment01-intro/setup.md)
 * [Install `kubectl`](segment01-intro/kubectl.md)
 
 
-
 ### Segment 2 - IAM
-* Create IAM Policies
-* Create IAM Group
-* Create IAM Roles
-* Create IAM User
-* [AWS Setup](segment02-iam/aws-creds.md)
+* [Create IAM Resources with Terraform](segment02-iam/terraform.md)
+* [AWS User Setup](segment02-iam/aws-creds.md)
 * [Install `eksctl`](segment02-iam/eksctl.md)
 
 
