@@ -55,3 +55,9 @@ terraform apply
 You may wish to look at the [./iam.tf](./iam.tf) file where all of these resources are defined.  It may be you need to change some of the values.  Check out the comments in this file. 
 
 
+## Deleting parts of the configuration
+
+Let's say we are testing this file and we only want to delete part of what we created, in this case, let's delete `eksdude`'s access key.  We can run: 
+
+```
+terraform delete -target=aws_iam_user.eksdude

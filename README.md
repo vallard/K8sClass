@@ -28,9 +28,10 @@ The purpose of the class is to show how to get an EKS cluster up and running, do
 * [Install `eksctl`](segment02-iam/eksctl.md)
 
 
-### Segement 3 - Launch EKS
+### Segment 3 - Launch EKS
 * [Launch the EKS cluster with eksctl](segment03-install/eks.md)
-* `kubectl` access
+* [Launch EKS cluster manually](segment03-install/eks.md#EKS-Manually)
+* [`kubectl` access](segment03-install/eks.md#kubectl-Access)
 
 ### Segment 4 - Cluster Verification
 * [Verify components and launch sample test application](segment04-verify/README.md)

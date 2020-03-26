@@ -74,3 +74,88 @@ resource "aws_iam_group_policy_attachment" "AWSCloudFormationFullAccess" {
   group = aws_iam_group.EKSDemoGroup.name
   policy_arn  = "arn:aws:iam::aws:policy/AWSCloudFormationFullAccess"
 }
+
+resource "aws_iam_group_policy_attachment" "EKSFullAccess" {
+  group = aws_iam_group.EKSDemoGroup.name
+  policy_arn  = aws_iam_policy.EKSFullAccess.arn
+}
+
+########################################################
+# Attach AWS inline policy to the group
+########################################################
+
+data "aws_caller_identity" "current" {}
+
+data "aws_iam_policy_document" "iamPassRole" {
+  statement {
+    actions = [
+      "iam:PassRole",
+      "iam:CreateServiceLinkedRole",
+      "iam:CreateRole",
+      "iam:DeleteRole",
+      "iam:AttachRolePolicy",
+      "iam:DetachRolePolicy",
+      "iam:PutRolePolicy",
+      "iam:DeleteRolePolicy",
+      "iam:CreateInstanceProfile"
+    ]
+    resources = [
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*"
+    ]
+  } 
+}
+
+resource "aws_iam_group_policy" "iamPassRole" {
+  group = aws_iam_group.EKSDemoGroup.name
+  name = "iamPassRole"
+  policy = data.aws_iam_policy_document.iamPassRole.json
+}
+
+
+########################################################
+# Create EKS Demo user and add to group
+########################################################
+
+resource "aws_iam_user" "eksdude" {
+  name = "eksdude"
+}
+
+resource "aws_iam_user_group_membership" "eksdude_groups" {
+  user = aws_iam_user.eksdude.name
+  groups = [
+    aws_iam_group.EKSDemoGroup.name
+  ]
+}
+
+########################################################
+# Create EKS Service Role for Manual Kubernetes Clusters
+########################################################
+
+resource "aws_iam_role" "EKSServiceRole" {
+  name = "EKSServiceRole"
+  assume_role_policy = <<-EOF
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Principal": {
+            "Service": "eks.amazonaws.com"
+          },
+          "Effect": "Allow",
+          "Sid": ""
+        }
+      ]
+    }
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "EKSServiceRoleAttachmentsCluster" {
+  role = aws_iam_role.EKSServiceRole.name
+  policy_arn  = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+}
+
+resource "aws_iam_role_policy_attachment" "EKSServiceRoleAttachmentsService" {
+  role = aws_iam_role.EKSServiceRole.name
+  policy_arn  = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+}

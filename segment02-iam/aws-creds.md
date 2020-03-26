@@ -106,3 +106,7 @@ brew install aws-iam-authenticator
 ```
 choco install -y aws-iam-authenticator
 ```
+
+## Bonus:  Command Completer
+
+If you use unix systems, tab completion is a big deal.  You can configure [following these instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
