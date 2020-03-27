@@ -41,6 +41,17 @@ We will create an EKSDemoGroup that will have all the necessary policies we need
 
 We will create one user called `eksdude` that will be used to create the cluster resources for us. 
 
+### PGP
+
+Our terraform creates a user profile including login password and access keys and secrets.  In order to use these you should create a PGP key. Once it is created you can export the base64 version of that key with: 
+
+```
+gpg export <email of key> | base64
+# or
+gpg --export --armor $KEYID
+```
+This can be put inside the [iam.tf](./iam.tf) file.
+
 ## Create IAM resources with Terraform
 
 We can create all of these resources described above with the following commands: 
@@ -53,6 +64,32 @@ terraform apply
 ```
 
 You may wish to look at the [./iam.tf](./iam.tf) file where all of these resources are defined.  It may be you need to change some of the values.  Check out the comments in this file. 
+
+## Sign in
+
+Get the User Password for Console Sign in 
+
+```
+terraform output password | base64 --decode  | gpg --decrypt | pbcopy
+```
+
+Make sure you installed the [aws cli tools](./aws-creds.md). Get the AWS Credentials for CLI.  On one screen type in: 
+
+``` 
+aws configure --profile=eksdude
+```
+Open another console and when it prompts for the access key you can get it with: 
+
+```
+terraform output key | pbcopy
+```
+
+For the secret key you can get it with: 
+
+```
+terraform output secret | base64 --decode  | gpg --decrypt | pbcopy
+```
+
 
 
 ## Deleting parts of the configuration
