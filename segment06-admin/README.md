@@ -61,7 +61,7 @@ Update the configuration:
 ...
 ```
 
-apply the autoscaler config: 
+apply the autoscaler config (if this wasn't set correctly)
 
 ```
 kubectl -n kube-system set image deployment.apps/cluster-autoscaler cluster-autoscaler=k8s.gcr.io/cluster-autoscaler:v1.14.7
@@ -89,7 +89,7 @@ Will make the nodes scale down and you'll see them go away.
 ## Horizontal Pod Autoscaler
 
 
-First we need to installt he Metrics server.  This server let's Kubernetes know how much load is on the machines. 
+First we need to install the Metrics server.  This server let's Kubernetes know how much load is on the machines. 
 
 
 ```
@@ -97,7 +97,7 @@ kubectl -n kube-system get deployment/metrics-server
 ```
 
 
-### Test HPA
+### Create HPA Demo (command line)
 
 ```
 kubectl run httpd --image=httpd --requests=cpu=100m --limits=cpu=200m --expose --port=80
@@ -110,20 +110,82 @@ Create the autoscaler for the pod:
 kubectl autoscale deployment httpd --cpu-percent=50 --min=1 --max=10
 kubectl get hpa/httpd
 ```
-Now we can test this hpa
+
+### Create HPA Demo (yaml file)
+
+Take a look at `hpa-demo.yaml`. You'll see we've added a few more items to the configuration: 
 
 ```
-kubectl run apache-bench -i --tty --rm --image=httpd -- ab -n 500000 -c 1000 http://httpd.default.svc.cluster.local/
+# Deployment
+...
+		resources:
+          requests:
+            cpu: "100m"
+          limits:
+            cpu: "200m"
+...
+```
+This is where we specify the resources our container needs. We could also use `memory`.  `100m` of CPU means `10%` of a CPU or 100 millicores. [See here](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-cpu).
+
+We also see that we have a new resource we've created: 
+
+```
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-demo
+spec:
+  maxReplicas: 10
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: hpa-demo
+  targetCPUUtilizationPercentage: 50
+```
+
+This is the HPA itself.  We want 10 replicas max and minimum of 1.  The target CPU utilization is 50%.  So as long as each pod is at that amount we will not increase or decrease the number of pods. 
+
+We can apply this with: 
+
+```
+kubectl apply -f hpa-demo.yaml
+```
+
+Now in addition to seeing the other resources we can see the HPA resource: 
+
+```
+kubectl get hpa
+```
+Output:
+ 
+```
+NAME       REFERENCE             TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+hpa-demo   Deployment/hpa-demo   0%/50%    1         10        1          9m27s
+```
+
+### Test the HPA
+
+Now we can test this hpa:
+
+```
+kubectl run apache-bench -i --tty --rm --image=httpd -- ab -n 500000 -c 1000 http://hpa-demo.default.svc.cluster.local/
 ```
 
 You can monitor the hpa to see what is reads: 
 
 ```
-kubectl get horizontalpodautoscaler.autoscaling/httpd
+kubectl get hpa -w 
 ```
 
 
 You should see the number of pods increase. 
+
+```
+NAME       REFERENCE             TARGETS    MINPODS   MAXPODS   REPLICAS   AGE
+hpa-demo   Deployment/hpa-demo   198%/50%   1         10        1          116s
+hpa-demo   Deployment/hpa-demo   198%/50%   1         10        4          2m1s
+```
 
 ## Kubernetes Dashboard
 
@@ -143,6 +205,8 @@ Now open the kube proxy to login:
 ```
 kubectl proxy
 ```
+
+(is 8001 used already?  On mac: `lsof -i tcp:8001` to show the process using it then you can kill the process. )
 
 You can now open dashboard at this super easy to remember URL: 
 

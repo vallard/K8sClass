@@ -213,3 +213,34 @@ resource "aws_iam_role_policy_attachment" "EKSServiceRoleAttachmentsService" {
   role = aws_iam_role.EKSServiceRole.name
   policy_arn  = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
 }
+
+
+########################################################
+# Create Cluster Autoscaling Policy
+########################################################
+
+data "aws_iam_policy_document" "EKSClusterAutoscaling" {
+  statement {
+    sid = "EKSClusterAutoscaling"
+    actions = [
+      "autoscaling:DescribeAutoScalingGroups",
+      "autoscaling:DescribeAutoScalingInstances",
+      "autoscaling:DescribeLaunchConfigurations",
+      "autoscaling:DescribeTags",
+      "autoscaling:SetDesiredCapacity",
+      "autoscaling:TerminateInstanceInAutoScalingGroup",
+      "ec2:DescribeLaunchTemplateVersions"
+    ]
+    resources = [
+      "*"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "EKSClusterAutoscaling" {
+  name = "EKSClusterAutoscaling"
+  path = "/"
+  policy = data.aws_iam_policy_document.EKSClusterAutoscaling.json
+}
+
+
