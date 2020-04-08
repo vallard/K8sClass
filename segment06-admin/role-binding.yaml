@@ -13,7 +13,7 @@ metadata:
   name: read-pods-role-binding
 subjects:
 - kind: User
-  name: read-pods
+  name: anotherUser
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role

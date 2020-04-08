@@ -112,7 +112,7 @@ data "aws_iam_policy_document" "iamPassRole" {
       "iam:DetachRolePolicy",
       "iam:PutRolePolicy",
       "iam:DeleteRolePolicy",
-      "iam:CreateInstanceProfile",
+      "iam:CreateInstanceProfile"
     ]
     resources = [
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*"

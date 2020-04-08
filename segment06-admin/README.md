@@ -259,9 +259,9 @@ This creates the `read-pods` user.  By modifying the `configMap` again and chang
 ```
 mapUsers: |
     - userarn: arn:aws:iam::188966951897:user/anotherUser
-      username: read-pods
+      username: anotherUser
       groups:
-        - read-pods
+        - read-pods-role
 ```
 We now can make it so this person can only read pods.  
 
