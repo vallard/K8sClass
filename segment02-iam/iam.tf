@@ -29,7 +29,8 @@ data "aws_iam_policy_document" "EKSFullAccess" {
   statement {
     sid = "EKSFullAccess"
     actions = [
-      "eks:*"
+      "eks:*",
+      "ecr:*"
     ]
     resources = [
       "*"
@@ -82,10 +83,17 @@ resource "aws_iam_group_policy_attachment" "AWSCloudFormationFullAccess" {
   policy_arn  = "arn:aws:iam::aws:policy/AWSCloudFormationFullAccess"
 }
 
+resource "aws_iam_group_policy_attachment" "DynamoFullAccess" {
+  group = aws_iam_group.EKSDemoGroup.name
+  policy_arn  = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+}
+
 resource "aws_iam_group_policy_attachment" "EKSFullAccess" {
   group = aws_iam_group.EKSDemoGroup.name
   policy_arn  = aws_iam_policy.EKSFullAccess.arn
 }
+
+
 
 ########################################################
 # Attach AWS inline policy to the group
@@ -242,5 +250,80 @@ resource "aws_iam_policy" "EKSClusterAutoscaling" {
   path = "/"
   policy = data.aws_iam_policy_document.EKSClusterAutoscaling.json
 }
+
+
+
+########################################################
+# Create Serverless Policy and attach to the EKSDemoGroup
+########################################################
+
+data "aws_iam_policy_document" "Serverless" {
+  statement {
+    sid = "Serverless"
+    actions = [
+      "apigateway:*",
+      "logs:*",
+      "lambda:*"
+    ]
+    resources = [
+      "*"
+    ]
+  }
+}
+resource "aws_iam_policy" "Serverless" {
+  name = "Serverless"
+  path = "/"
+  policy = data.aws_iam_policy_document.Serverless.json
+}
+
+resource "aws_iam_group_policy_attachment" "EKSDemoGroupServerless" {
+  group = aws_iam_group.EKSDemoGroup.name
+  policy_arn  = aws_iam_policy.Serverless.arn
+}
+
+
+########################################################
+# Create KubeLambda Role and attach Policies
+########################################################
+
+resource "aws_iam_role" "kubeLambda" {
+  name = "kubeLambda"
+  description = "Allows Lambda functions to make kubernetes calls on our cluster."
+  assume_role_policy = <<-EOF
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Principal": {
+            "Service": "lambda.amazonaws.com"
+          },
+          "Effect": "Allow",
+          "Sid": ""
+        }
+      ]
+    }
+EOF
+}
+
+
+resource "aws_iam_role_policy_attachment" "kubeLambdaEKSFullAccess" {
+  role = aws_iam_role.kubeLambda.name
+  policy_arn  = aws_iam_policy.EKSFullAccess.arn
+}
+
+resource "aws_iam_role_policy_attachment" "kubeLambdaServerless" {
+  role = aws_iam_role.kubeLambda.name
+  policy_arn  = aws_iam_policy.Serverless.arn
+}
+
+resource "aws_iam_role_policy_attachment" "kubeLambdaLambda" {
+  role = aws_iam_role.kubeLambda.name
+  policy_arn  = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+########################################################
+# Add Dynamo Role 
+########################################################
 
 
