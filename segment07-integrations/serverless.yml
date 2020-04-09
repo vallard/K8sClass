@@ -5,7 +5,7 @@ provider:
   region: us-west-2
   environment: 
     ## Define the name of your EKS cluster you want the lambda function to be able to access
-    CLUSTER: "apr08"
+    CLUSTER: "apr09"
   ## define the role that this lambda function will run under.  This role should have access to 
   ## be able to run kubectl commands. 
   role: arn:aws:iam::188966951897:role/kubeLambda

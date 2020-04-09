@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
 time eksctl create cluster \
---name apr08 \
+--name apr09 \
 --version 1.15 \
 --region us-west-2 \
 --nodegroup-name standard-workers \
