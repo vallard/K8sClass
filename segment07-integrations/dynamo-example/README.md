@@ -2,7 +2,10 @@
 
 This is a quick application that shows how to run an application which accesses AWS components.  In this case, it's dynamoDB!
 
+
 ## Create Dynamo DB Table to test
+
+Run the Terraform command `terraform apply` in this directory to create the DynamoDB table with a user, or you can do it manually as shown below. 
 
 Opening the Dynamo DB console we can create a new table. Our application expects it to be called `dynamoUsers` but we can change it with environment variables if we want.  The primary key we called simply `id`.
 

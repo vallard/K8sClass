@@ -19,4 +19,3 @@ roleRef:
   kind: Role
   name: read-pods-role
   apiGroup: rbac.authorization.k8s.io
-

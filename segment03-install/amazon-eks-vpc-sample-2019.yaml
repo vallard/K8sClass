@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Amazon EKS Sample VPC - Public subnets only'
+Description: 'Amazon EKS Sample VPC'
 
 Parameters:
 
@@ -51,12 +51,6 @@ Conditions:
       - Fn::Equals:
         - {Ref: 'AWS::Region'}
         - cn-north-1
-      - Fn::Equals:
-        - {Ref: 'AWS::Region'}
-        - sa-east-1
-      - Fn::Equals:
-        - {Ref: 'AWS::Region'}
-        - us-west-1
 
   HasMoreThan2Azs:
     Fn::Not:
@@ -105,7 +99,6 @@ Resources:
     Metadata:
       Comment: Subnet 01
     Properties:
-      MapPublicIpOnLaunch: true
       AvailabilityZone:
         Fn::Select:
         - '0'
@@ -118,15 +111,12 @@ Resources:
       Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-Subnet01"
-      - Key: kubernetes.io/role/elb
-        Value: 1
 
   Subnet02:
     Type: AWS::EC2::Subnet
     Metadata:
       Comment: Subnet 02
     Properties:
-      MapPublicIpOnLaunch: true
       AvailabilityZone:
         Fn::Select:
         - '1'
@@ -139,8 +129,6 @@ Resources:
       Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-Subnet02"
-      - Key: kubernetes.io/role/elb
-        Value: 1
 
   Subnet03:
     Condition: HasMoreThan2Azs
@@ -148,7 +136,6 @@ Resources:
     Metadata:
       Comment: Subnet 03
     Properties:
-      MapPublicIpOnLaunch: true
       AvailabilityZone:
         Fn::Select:
         - '2'
@@ -161,8 +148,6 @@ Resources:
       Tags:
       - Key: Name
         Value: !Sub "${AWS::StackName}-Subnet03"
-      - Key: kubernetes.io/role/elb
-        Value: 1
 
   Subnet01RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation

@@ -1,5 +1,12 @@
 # Administrative Topics
 
+Autoscaling on Kubernetes comes in 3 flavors: 
+
+* Cluster Autoscaling - Update the number of nodes in the cluster as demand changes. 
+* Horizontal Pod Autoscaling (HPA) - Built into kubernetes, adjusts the number of pods running based on demand. 
+* Vertical Pod Autoscaling - Update CPU and Memory reservations of Pods based on use to better adjust HPA useage. 
+
+
 ## Cluster Autoscaler
 
 Update the role of the EKS nodes to allow a policy that appears as follows: 
@@ -25,11 +32,13 @@ Update the role of the EKS nodes to allow a policy that appears as follows:
 }
 ```
 
+(__Note: This was created in our Terraform deployment earlier.__)
+
 Next add the metrics server so kubernetes can tell what is happening with the nodes: 
 
 ```
 cd segment06-admin/
-kubectl apply -f metrics-server-0.3.6/
+kubectl apply -f metrics-server-0.3.6/components.yaml
 ```
 
 Now install the cluster autoscaler:
@@ -45,6 +54,7 @@ Allow annotation:
 kubectl -n kube-system annotate deployment.apps/cluster-autoscaler cluster-autoscaler.kubernetes.io/safe-to-evict="false"
 ```
 
+
 Edit the configuration of the cluster autoscaler: 
 
 
@@ -56,8 +66,9 @@ Update the configuration:
 
 ```
 ...
-- --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/eksctl-2-18
+- --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/aug05
 - --skip-nodes-with-system-pods=false
+- --balance-similar-node-groups
 ...
 ```
 
@@ -89,13 +100,7 @@ Will make the nodes scale down and you'll see them go away.
 ## Horizontal Pod Autoscaler
 
 
-First we need to install the Metrics server.  This server let's Kubernetes know how much load is on the machines. 
-
-
-```
-kubectl -n kube-system get deployment/metrics-server
-```
-
+The metric server was deployed for the cluster autoscaler.  If you didn't do that step, make sure you look at the beginning of this document for how to do this.
 
 ### Create HPA Demo (command line)
 
@@ -252,6 +257,7 @@ This user now has access to the cluster.
 We can limit this user to just listing pods by assigning a group to it.  
 
 ```
+cd users/
 kubectl apply -f role-binding.yaml
 ```
 This creates the `read-pods` user.  By modifying the `configMap` again and changing the groups to the following: 

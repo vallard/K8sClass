@@ -1,6 +1,6 @@
 # Segment 4 - Verification
 
-Now that cluster is up, we can see several services and things that are running. 
+Now that cluster is up, you should have access to it using `kubectl` commands.  Let's take a look at our system.   
 
 ## Namespaces
 Each cluster can have namespaces which logically seperate the different applications, pods, and services into logical groupings. 
@@ -53,6 +53,7 @@ A daemon set that allows network connectivity to happen with the pods on the nod
 kubectl logs -n kube-system kube-proxy-XXXXX
 ```
 
+
 ## Services
 
 To see what services are running run: 
@@ -76,6 +77,7 @@ Let's create 2 pods and a service:
 ```
 kubectl apply -f ./dnstest
 ```
+#### Note: the old version of deployments were in extension/v1beta1 have moved to app/v1 in version 16 of Kubernetes.
 
 To examine them run: 
 
@@ -113,7 +115,7 @@ Here above 👆🏼we see that the service name is `ngx`.  So our other pods can
 Let's log into the busybox pod and test: 
 
 ```
-kubectl exec -it bb8-86... /bin/sh  
+kubectl exec -it bb8-86... -- /bin/sh  
 ```
 
 To get the Nginx service we can run: 
@@ -126,6 +128,11 @@ This will then print the output of the html generated from the page.  Our CoreDN
 You could also reference it by longer names if it were in a different namespace: 
 
 ```
-wget -q -S -O - ngx
+wget -q -S -O - ngx.default
+wget -q -S -O - ngx.default.svc
+```
+
+Here we use the namespace (default) to reference.  
+
 
 

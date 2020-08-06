@@ -113,4 +113,30 @@ To see logs:
 sls logs -f list
 ```
 
+You can simply curl the application to see all the pods: 
+
+```
+curl https://0qtyabihgc.execute-api.us-west-2.amazonaws.com/dev/list | jq
+```
+
+The output looks similar to the following: 
+
+```json
+{
+  "pods": [
+    {
+      "ip": "192.168.14.34",
+      "namespace": "cert-manager",
+      "name": "cert-manager-69779b98cd-vbsl9"
+    },
+    {
+      "ip": "192.168.29.92",
+      "namespace": "cert-manager",
+      "name": "cert-manager-cainjector-7c4c4bbbb9-tttbs"
+    },
+    ...
+  ]
+}
+```
+These are the pods in our cluster. 
 

@@ -90,6 +90,16 @@ For the secret key you can get it with:
 terraform output secret | base64 --decode  | gpg --decrypt | pbcopy
 ```
 
+You should then verify you can actually work with this profile: 
+
+```
+export AWS_PROFILE=eksdude
+aws s3 ls
+aws ec2 describe-instances
+aws eks list-clusters
+```
+
+
 
 
 ## Deleting parts of the configuration

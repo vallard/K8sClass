@@ -5,7 +5,7 @@ metadata:
 data:
   region: us-west-2
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: eks-dynamo

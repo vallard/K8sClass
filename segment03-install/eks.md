@@ -1,14 +1,16 @@
 # Create EKS cluster
 
 
-The cost to create an EKS cluster right now is:
+The cost to create an EKS cluster (`us-west-2`)
 
-| Item | Cost Dec 2019 | Cost Feb 2020 |
-|------------------|-------|---|
-|EKS Control Plane | $0.20/hr | $0.10/hr |
+| Item             | Cost Dec 2019 | Cost Feb 2020 | Cost Aug 2020 |
+|------------------|---------------|---------------|------------------|
+|EKS Control Plane | $0.20/hr | $0.10/hr | $0.10/hr |
+| Fargate  | | | $0.04048 vcpu + $0.004445 GB/hr |
 |3 T3 instances | $0.1248/hr | $0.1248/hr |
-| NAT Gateway | $0.045/hr | $0.045/hr
+| NAT Gateway | $0.045/hr | $0.045/hr |
 | Total | $0.37/hr | $0.27/hr | 
+
 
 [AWS Source](https://aws.amazon.com/eks/pricing/)
 
@@ -19,28 +21,13 @@ Your user should have the appropriate [IAM permissions](https://aws.amazon.com/i
 
 ## Create cluster with `eksctl`
 
-We can create our first cluster with: 
-
-```
-eksctl create cluster \
---name prod \
---version 1.14 \
---region us-west-2 \
---nodegroup-name standard-workers \
---node-type t3.medium \
---nodes 3 \
---nodes-min 1 \
---nodes-max 4 \
---managed
-```
-
-(Or run [./createEKSctlCluster.sh](createEKSctlCluster.sh) )
+We can create our first cluster with [./createEKSctlCluster.sh](createEKSctlCluster.sh) 
 
 If there are failures it is most likely related to a permission issue of your commandline user. 
 
 You can check the cloud formation console and either roll back or add the permissions. 
 
-This operation takes about 12-15 minutes. 
+This operation takes about 12-15 minutes if you don't enable Fargate or 21 minutes if you enable Fargate. 
  
 
 ## EKS Manually
