@@ -1,0 +1,62 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+  name: prometheus-k8s
+  namespace: monitoring
+spec:
+  tls:
+  - hosts:
+    - prometheus.k8s.castlerock.ai
+    secretName: prometheus-tls-cert
+  rules:
+    - host: prometheus.k8s.castlerock.ai
+      http:
+        paths:
+        - backend:
+            serviceName: prometheus-k8s
+            servicePort: 9090
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+  name: grafana
+  namespace: monitoring
+spec:
+  tls:
+  - hosts:
+    - grafana.k8s.castlerock.ai
+    secretName: grafana-tls-cert
+  rules:
+    - host: grafana.k8s.castlerock.ai
+      http:
+        paths:
+        - backend:
+            serviceName: grafana
+            servicePort: 3000
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+  name: alertmanager
+  namespace: monitoring
+spec:
+  tls:
+  - hosts:
+    - alertmanager.k8s.castlerock.ai
+    secretName: alertmanager-tls-cert
+  rules:
+    - host: alertmanager.k8s.castlerock.ai
+      http:
+        paths:
+        - backend:
+            serviceName: alertmanager-main
+            servicePort: 9093
