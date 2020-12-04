@@ -1,13 +1,13 @@
 #!/bin/bash
 set -x
 time eksctl create cluster \
---name oct07 \
---version 1.17 \
+--name dec07 \
+--version 1.18 \
+#--fargate \
 --region us-west-2 \
 --nodegroup-name standard-workers \
 --node-type t3.medium \
 --nodes 3 \
 --nodes-min 1 \
 --nodes-max 4 \
---managed
-#--fargate \
+--managed 

@@ -87,7 +87,7 @@ spec:
 Now we can update our pod to make it persistent: 
 
 ```
-kubectl apply -f ngx.yaml
+kubectl apply -f ngx-volumes.yaml
 ```
 
 Since this is a new pod and new volume, we need to add the `index.html` file to the pod again otherwise it's a blank directory!  Navigating before adding will give you another NGINX error (this time coming from the pod, not the Ingress Controller) that says `403 Forbidden`.  Let's fix it!

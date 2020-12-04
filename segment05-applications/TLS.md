@@ -9,7 +9,7 @@ Let's Encrypt provides free automated TLS certificates for all of our applicatio
 To install its as simple as: 
 
 ```
-$ kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.16.0/cert-manager.yaml
+$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.yaml
 ```
 
 To see what was installed run: 

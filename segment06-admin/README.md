@@ -36,6 +36,8 @@ Update the role of the EKS nodes to allow a policy that appears as follows:
 
 Next add the metrics server so kubernetes can tell what is happening with the nodes: 
 
+(The latest version is [here](https://docs.aws.amazon.com/eks/latest/userguide/metrics-server.html) )
+
 ```
 cd segment06-admin/
 kubectl apply -f metrics-server-0.3.6/components.yaml

@@ -15,8 +15,10 @@ Change from LoadBalancer to `ClusterIP`.  You'll have to remove the `NodePort` t
 
 ## Deploy Nginx Ingress Controller
 
+(See latest version to download: [here](https://kubernetes.github.io/ingress-nginx/deploy). )
+
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.34.1/deploy/static/provider/aws/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.41.2/deploy/static/provider/aws/deploy.yaml
 ```
 This will create resources in the `ingress-nginx` name space. 
 
