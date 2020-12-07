@@ -3,7 +3,6 @@ set -x
 time eksctl create cluster \
 --name dec07 \
 --version 1.18 \
-#--fargate \
 --region us-west-2 \
 --nodegroup-name standard-workers \
 --node-type t3.medium \
