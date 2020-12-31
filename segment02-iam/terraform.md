@@ -21,6 +21,8 @@ Gives the output:
 Terraform v0.12.24
 ```
 
+Note: I've updated some of these commands for `v0.14`
+
 ## Create IAM resources
 
 When using EKS it is strongly recommended to NOT use the root AWS account.  There are errors that can show up.  As such, use another account to create EKS resources.  
@@ -73,6 +75,12 @@ Get the User Password for Console Sign in
 terraform output password | base64 --decode  | gpg --decrypt | pbcopy
 ```
 
+`v0.14.3`: 
+
+```
+terraform output -raw password | base64 --decode  | gpg --decrypt | pbcopy
+```
+
 Make sure you installed the [aws cli tools](./aws-creds.md). Get the AWS Credentials for CLI.  On one screen type in: 
 
 ``` 
@@ -89,6 +97,13 @@ For the secret key you can get it with:
 ```
 terraform output secret | base64 --decode  | gpg --decrypt | pbcopy
 ```
+
+version > `0.14.3`:
+
+```
+terraform output -raw secret | base64 --decode  | gpg --decrypt | pbcopy
+```
+
 
 You should then verify you can actually work with this profile: 
 

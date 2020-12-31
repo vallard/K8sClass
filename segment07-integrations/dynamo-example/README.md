@@ -97,3 +97,10 @@ Add to this role the `AmazonDynamoDBFullAccess` and then refresh the page.  If a
 ![dynamo example](../../images/07-dynamo1.png)
 
 
+## Service Accounts
+
+We already added the ability for our `eksdude` to create resources.  We can do the following:
+
+```
+eksctl utils associate-iam-oidc-provider --cluster dec08 --approve
+```

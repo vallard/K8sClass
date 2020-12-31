@@ -1,4 +1,3 @@
-
 # Put in your profile name here.  It might be that you want to use the "default" profile.
 # see your profiles in ~/.aws/credentials
 # if you don't have credentials set in ~/.aws/credentials you can also put in 
@@ -104,6 +103,7 @@ data "aws_caller_identity" "current" {}
 data "aws_iam_policy_document" "iamPassRole" {
   statement {
     actions = [
+      "ssm:GetParameter",
       "iam:PassRole",
       "iam:CreateServiceLinkedRole",
       "iam:CreateRole",
@@ -112,10 +112,15 @@ data "aws_iam_policy_document" "iamPassRole" {
       "iam:DetachRolePolicy",
       "iam:PutRolePolicy",
       "iam:DeleteRolePolicy",
-      "iam:CreateInstanceProfile"
+      "iam:CreateInstanceProfile",
+      "iam:CreateOpenIDConnectProvider",
+      "iam:DeleteOpenIDConnectProvider"
     ]
     resources = [
-      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*"
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/oidc.eks.us-west-2.amazonaws.com",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/oidc.eks.us-west-2.amazonaws.com/*",
+      "arn:aws:ssm:*"
     ]
   } 
 }
