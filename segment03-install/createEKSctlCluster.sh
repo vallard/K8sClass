@@ -1,8 +1,8 @@
 #!/bin/bash
 set -x
 time eksctl create cluster \
---name dec31 \
---version 1.18 \
+--name apr7 \
+--version 1.20 \
 --region us-west-2 \
 --nodegroup-name standard-workers \
 --node-type t3.medium \

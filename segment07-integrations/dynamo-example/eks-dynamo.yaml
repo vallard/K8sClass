@@ -49,7 +49,7 @@ spec:
   selector:
     run: eks-dynamo
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -66,5 +66,10 @@ spec:
       http:
         paths:
         - backend:
-            serviceName: eks-dynamo
-            servicePort: 80
+            service: 
+              name: eks-dynamo
+              port: 
+                number: 80
+          pathType: Prefix
+          path: "/"
+
