@@ -1,5 +1,5 @@
 # Real World Kubernetes
-Practical Code and COnfigurations for my Kubernetes class. 
+Practical Code and Configurations for my Kubernetes class. 
 Materials Created by me, [@vallard](https://twitter.com/vallard)
 
 This is a revamp of my somewhat popular O'Reilly class EKS in the data center.  I've taken feedback from the hundreds of people who have taken the class to make it more applicable to the real world.  
