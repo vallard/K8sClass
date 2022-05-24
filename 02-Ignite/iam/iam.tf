@@ -288,3 +288,32 @@ resource "aws_iam_role" "eks_dude_role" {
   name               = "eks_dude_role"
   assume_role_policy = data.aws_iam_policy_document.eks_dude_assume_role_policy.json
 }
+
+
+
+########################################################
+# EKS node group role
+########################################################
+
+data "aws_iam_policy_document" "eks_node_group_assume_role_policy" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "sts:AssumeRole"
+    ]
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role" "eks_node_group" {
+  name               = "eks_node_group"
+  assume_role_policy = data.aws_iam_policy_document.eks_dude_assume_role_policy.json
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+    "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+    "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  ]
+}

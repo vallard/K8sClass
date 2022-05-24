@@ -94,11 +94,6 @@ terraform output key | pbcopy
 
 For the secret key you can get it with: 
 
-```
-terraform output secret | base64 --decode  | gpg --decrypt | pbcopy
-```
-
-version > `0.14.3`:
 
 ```
 terraform output -raw secret | base64 --decode  | gpg --decrypt | pbcopy
