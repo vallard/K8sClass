@@ -15,13 +15,8 @@ Test that it is installed and working:
 ```
 terraform version
 ```
-Gives the output: 
 
-```
-Terraform v0.12.24
-```
-
-Note: I've updated some of these commands for `v0.14`
+Note: I've updated some of these commands for `1.2.1`
 
 ## Create IAM resources
 
@@ -59,7 +54,7 @@ This can be put inside the [iam.tf](./iam.tf) file.
 We can create all of these resources described above with the following commands: 
 
 ```
-cd segment02-iam
+cd 02/iam
 terraform init 
 terraform plan
 terraform apply 
@@ -67,19 +62,39 @@ terraform apply
 
 You may wish to look at the [./iam.tf](./iam.tf) file where all of these resources are defined.  It may be you need to change some of the values.  Check out the comments in this file. 
 
-## Sign in
+
+## Create Network with Terraform 
+
+```
+cd 02/network
+terraform init
+terraform plan 
+terraform apply
+```
+
+## Create EKS with Terraform
+
+```
+cd 02/eks
+terraform init
+terraform plan 
+terraform apply
+```
+
+## User Sign in
+
+We created the user with our `iam.tf` and we can use the output to log in as the user.
+
+### Console Sign in
 
 Get the User Password for Console Sign in 
 
 ```
-terraform output password | base64 --decode  | gpg --decrypt | pbcopy
-```
-
-`v0.14.3`: 
-
-```
+cd 02/iam
 terraform output -raw password | base64 --decode  | gpg --decrypt | pbcopy
 ```
+
+### Command line Sign in
 
 Make sure you installed the [aws cli tools](./aws-creds.md). Get the AWS Credentials for CLI.  On one screen type in: 
 
@@ -89,7 +104,7 @@ aws configure --profile=eksdude
 Open another console and when it prompts for the access key you can get it with: 
 
 ```
-terraform output key | pbcopy
+terraform output -raw key | pbcopy
 ```
 
 For the secret key you can get it with: 
@@ -109,10 +124,42 @@ aws ec2 describe-instances
 aws eks list-clusters
 ```
 
+## Log into EKS Cluster
+
+We created the EKS cluster with a role rather than a user.  Users may come and go in our system but we gave the user `eksdude` permissions to access the role that created the cluster.  
+
+### 1. Update `~/.kube/config`
+
+We add the cluster login permissions to the `config` file automatically by running:  
+
+```
+aws eks update-kubeconfig --name eks-demo-cluster
+```
+
+### 2. Add the role
+
+But this is incomplete because we need to actually log in with the role that created the cluster.  This is done by adding the lines: 
+
+```
+ 		- --role-arn
+      - arn:aws:iam::188966951897:role/eks_dude_role
+```
+
+To the `args:` list at the very end of the file.  (Note:  The account ID is my account ID and will need to be changed to match your account ID.)
+
+### 3. Login
+
+We can now log in: 
+
+```
+kubectl get pods -n kube-system
+```
 
 
 
-## Deleting parts of the configuration
+
+
+# Appendix: Deleting parts of the Terraform plan
 
 Let's say we are testing this file and we only want to delete part of what we created, in this case, let's delete `eksdude`'s access key.  We can run: 
 

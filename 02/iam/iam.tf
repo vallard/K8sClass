@@ -105,6 +105,7 @@ data "aws_iam_policy_document" "iamPassRole" {
     actions = [
       "ssm:GetParameter",
       "iam:PassRole",
+      "iam:GetRole",
       "iam:CreateServiceLinkedRole",
       "iam:CreateRole",
       "iam:DeleteRole",
@@ -114,7 +115,8 @@ data "aws_iam_policy_document" "iamPassRole" {
       "iam:DeleteRolePolicy",
       "iam:CreateInstanceProfile",
       "iam:CreateOpenIDConnectProvider",
-      "iam:DeleteOpenIDConnectProvider"
+      "iam:DeleteOpenIDConnectProvider",
+      "iam:ListAttachedRolePolicies"
     ]
     resources = [
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*",
@@ -123,6 +125,12 @@ data "aws_iam_policy_document" "iamPassRole" {
       "arn:aws:ssm:*"
     ]
   }
+}
+
+resource "aws_iam_policy" "iamPassRole" {
+  name   = "iamPassRole"
+  path   = "/"
+  policy = data.aws_iam_policy_document.iamPassRole.json
 }
 
 resource "aws_iam_group_policy" "iamPassRole" {
@@ -260,17 +268,8 @@ resource "aws_iam_policy" "EKSClusterAutoscaling" {
 # EKS role for creating EKS clusters
 ########################################################
 
+
 data "aws_iam_policy_document" "eks_dude_assume_role_policy" {
-  statement {
-    effect = "Allow"
-    actions = [
-      "sts:AssumeRole"
-    ]
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
-  }
   statement {
     actions = [
       "sts:AssumeRole"
@@ -282,13 +281,37 @@ data "aws_iam_policy_document" "eks_dude_assume_role_policy" {
       ]
     }
   }
+  statement {
+    actions = [
+      "sts:AssumeRole"
+    ]
+    principals {
+      type = "AWS"
+      identifiers = [
+        data.aws_caller_identity.current.account_id
+      ]
+    }
+  }
 }
 
 resource "aws_iam_role" "eks_dude_role" {
   name               = "eks_dude_role"
   assume_role_policy = data.aws_iam_policy_document.eks_dude_assume_role_policy.json
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/AmazonEC2FullAccess",
+    aws_iam_policy.iamPassRole.arn,
+    aws_iam_policy.EKSFullAccess.arn
+  ]
 }
 
+/*
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSNSReadOnlyAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonVPCFullAccess"
+  policy_arn = "arn:aws:iam::aws:policy/IAMReadOnlyAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AWSCloudFormationFullAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+*/
 
 
 ########################################################
@@ -297,20 +320,33 @@ resource "aws_iam_role" "eks_dude_role" {
 
 data "aws_iam_policy_document" "eks_node_group_assume_role_policy" {
   statement {
+    actions = [
+      "sts:AssumeRole"
+    ]
+    principals {
+      type = "Service"
+      identifiers = [
+        "ec2.amazonaws.com"
+      ]
+    }
+  }
+  statement {
     effect = "Allow"
     actions = [
       "sts:AssumeRole"
     ]
     principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
+      type = "AWS"
+      identifiers = [
+        aws_iam_role.eks_dude_role.arn
+      ]
     }
   }
 }
 
 resource "aws_iam_role" "eks_node_group" {
   name               = "eks_node_group"
-  assume_role_policy = data.aws_iam_policy_document.eks_dude_assume_role_policy.json
+  assume_role_policy = data.aws_iam_policy_document.eks_node_group_assume_role_policy.json
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
     "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",

@@ -24,9 +24,7 @@ locals {
 }
 
 provider "aws" {
-  alias   = "aws_assume_role"
   region  = "us-west-2"
-  profile = "eksdude"
   assume_role {
     role_arn = local.iam_state.eks_dude_role.arn
   }
