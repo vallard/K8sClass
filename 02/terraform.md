@@ -1,6 +1,6 @@
 # Terraform
 
-We can use terraform to set up all of our IAM resources.  Terraform is infrastructure as code and helps us do actions quickly that otherwise are prone to human mistakes. 
+We can use terraform to set up our entire AWS EKS infrastructure including our IAM resources and networking.  Terraform is infrastructure as code and helps us do actions quickly that otherwise are prone to human mistakes. 
 
 ## Get Terraform
 
@@ -16,7 +16,7 @@ Test that it is installed and working:
 terraform version
 ```
 
-Note: I've updated some of these commands for `1.2.1`
+Note: This was tested with version `1.2.1`
 
 ## Create IAM resources
 
@@ -54,7 +54,7 @@ This can be put inside the [iam.tf](./iam.tf) file.
 We can create all of these resources described above with the following commands: 
 
 ```
-cd 02/iam
+cd 02/terraform/iam
 terraform init 
 terraform plan
 terraform apply 
@@ -66,7 +66,7 @@ You may wish to look at the [./iam.tf](./iam.tf) file where all of these resourc
 ## Create Network with Terraform 
 
 ```
-cd 02/network
+cd 02/terraform/network
 terraform init
 terraform plan 
 terraform apply
@@ -75,7 +75,7 @@ terraform apply
 ## Create EKS with Terraform
 
 ```
-cd 02/eks
+cd 02/terraform/eks
 terraform init
 terraform plan 
 terraform apply
@@ -155,7 +155,7 @@ We can now log in:
 kubectl get pods -n kube-system
 ```
 
-
+This is a very basic use case of Terraform.  Let's see how to do a few more advanced moves using Terragrunt in [our next section](./terragrunt.md)
 
 
 
