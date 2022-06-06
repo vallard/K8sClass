@@ -1,6 +1,5 @@
 # Real World Kubernetes
-Practical Code and Configurations for my Kubernetes class. 
-Materials Created by me, [@vallard](https://twitter.com/vallard)
+This is a course with practical code examples about running Kubernetes in the real world.  
 
 This is a revamp of my somewhat popular O'Reilly class EKS in the data center.  I've taken feedback from the hundreds of people who have taken the class to make it more applicable to the real world.  
 
@@ -8,10 +7,15 @@ The class is available on [O'Reilly's platform](https://learning.oreilly.com/hom
 
 This class is one giant demo, so you can probably follow the script easy and do this self paced. Pull requests are welcome if you see errors. 
 
+All content was created by me, [@vallard](https://twitter.com/vallard)
+
+
+
 ## Contents
 
 ### Segment 01 - Setup & Stuff You'll Need
-* [Stuff you'll need](01/README.md)
+* [Introduction](01/README.md) Read this if you want a background on Kubernetes, Containers, and just getting started. 
+* [Tools](01/tools.md) - Read this to get the tools you'll need to run these exercises. 
 
 ### Segment 02 - Ignite EKS with Terraform
 
