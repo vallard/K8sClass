@@ -34,7 +34,7 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 * [Ingress Controllers](04/Ingress.md)
 * [Cert-Manager & Let's Encrypt](04/TLS.md)
 * [November Rain: Persistent volumes](04/PV.md)
-* [External Secrets with AWS SecretsManager](05/Secrets.md)
+* [External Secrets with AWS SecretsManager](04/Secrets.md)
 
 
 ### Segment 05 - Boss Operations
