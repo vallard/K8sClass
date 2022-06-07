@@ -2,21 +2,7 @@
 
 We can use terraform to set up our entire AWS EKS infrastructure including our IAM resources and networking.  Terraform is infrastructure as code and helps us do actions quickly that otherwise are prone to human mistakes. 
 
-## Get Terraform
-
-The official downloads [are here](https://www.terraform.io/downloads.html).  I am on a mac and simply ran: 
-
-```
-brew install terraform
-```
-
-Test that it is installed and working: 
-
-```
-terraform version
-```
-
-Note: This was tested with version `1.2.1`
+Note: This was tested and created with version `1.2.1`
 
 ## Create IAM resources
 
@@ -40,7 +26,35 @@ We will create one user called `eksdude` that will be used to create the cluster
 
 ### PGP
 
-Our terraform creates a user profile including login password and access keys and secrets.  In order to use these you should create a PGP key. Once it is created you can export the base64 version of that key with: 
+Our terraform creates a user profile including login password and access keys and secrets.  In order to use these you should create a PGP key. We installed `gnupg` in the [first part](../01/tools.md).  Now we need to generate our key: 
+
+```
+gpg --gen-key
+```
+
+This walks us through a menu: 
+
+```
+gpg (GnuPG) 2.3.6; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Note: Use "gpg --full-generate-key" for a full featured key generation dialog.
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Vallard Benincosa
+Email address: vallard@castlerock.ai
+You selected this USER-ID:
+    "Vallard Benincosa <vallard@castlerock.ai>"
+
+Change (N)ame, (E)mail, or (O)kay/(Q)uit? O
+```
+
+
+
+
+Once it is created you can export the base64 version of that key with: 
 
 ```
 gpg export <email of key> | base64

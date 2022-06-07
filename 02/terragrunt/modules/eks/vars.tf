@@ -10,5 +10,11 @@ variable "public_subnets" {
 
 variable "region" {
   type        = string
-  description = "region to deploy, eg: us-west-2"
+  description = "region: e.g: us-west-2"
 }
+
+variable "k8s_version" {
+  type = string
+  description = "kubernetes version: e.g: 1.22"
+}
+

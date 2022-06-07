@@ -8,7 +8,7 @@ resource "aws_eks_cluster" "cluster" {
     subnet_ids = var.public_subnets
   }
   role_arn = local.iam_state.eks_service_role.arn
-  version  = "1.22"
+  version  = var.k8s_version
   tags = {
     Environment = "K8sClass-${var.env}"
   }

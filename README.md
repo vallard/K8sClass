@@ -19,9 +19,8 @@ All content was created by me, [@vallard](https://twitter.com/vallard)
 
 ### Segment 02 - Ignite EKS with Terraform
 
-* [IAM Users](02/terraform.md)
-* [EKS Cluster](terraform)
-* [Terragrunt](terragrunt)
+* [Terraform](02/terraform.md)
+* [Terragrunt](02/terragrunt.md)
 
 ### Segment 03 - Rapid Cluster Exploration
 
