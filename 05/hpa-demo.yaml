@@ -1,0 +1,59 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hpa-demo
+  name: hpa-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hpa-demo
+  template:
+    metadata:
+      labels:
+        app: hpa-demo
+    spec:
+      containers:
+      - image: httpd
+        imagePullPolicy: Always
+        name: hpa-demo
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: 
+          requests: 
+            cpu: "100m"
+          limits:
+            cpu: "200m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: hpa-demo
+  name: hpa-demo
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: hpa-demo
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-demo
+spec:
+  maxReplicas: 10
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hpa-demo
+  targetCPUUtilizationPercentage: 50

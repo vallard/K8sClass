@@ -1,0 +1,15 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: ngx
+spec:
+  rules:
+    - host: k8s.castlerock.ai
+      http:
+        paths:
+        - backend:
+            serviceName: ngx
+            servicePort: 80

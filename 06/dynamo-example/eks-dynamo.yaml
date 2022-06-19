@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: eks-dynamo
+data:
+  region: us-west-2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eks-dynamo
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      run: eks-dynamo
+  template:
+    metadata:
+      labels: 
+        run: eks-dynamo
+    spec:
+      #serviceAccountName: dynamo-users
+      containers:
+      - name: eks-dynamo
+        image: 188966951897.dkr.ecr.us-west-2.amazonaws.com/vallard/eks-dynamo:latest
+        ports: 
+          - containerPort: 80
+        env:
+          - name: REGION
+            valueFrom:
+              configMapKeyRef:
+                name: eks-dynamo
+                key: region
+        #envFrom:
+        #- secretRef:
+        #    name: eksSecrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: eks-dynamo
+  name: eks-dynamo
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: eks-dynamo
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+  name: eks-dynamo
+spec:
+  tls:
+  - hosts:
+    - dynamo.k8s.castlerock.ai
+    secretName: eks-dynamo-tls-cert
+  rules:
+    - host: dynamo.k8s.castlerock.ai
+      http:
+        paths:
+        - backend:
+            service: 
+              name: eks-dynamo
+              port: 
+                number: 80
+          pathType: Prefix
+          path: "/"
+

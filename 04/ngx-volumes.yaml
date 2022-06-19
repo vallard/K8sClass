@@ -1,0 +1,47 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ngx-pv-claim
+  labels:
+    app: ngx
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: gp2
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: ngx
+  name: ngx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: ngx
+  template:
+    metadata:
+      labels:
+        run: ngx
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: ngx
+        volumeMounts:
+          - name: vol
+            mountPath: /usr/share/nginx/html/
+      volumes:
+        - name: vol 
+          persistentVolumeClaim:
+            claimName: ngx-pv-claim

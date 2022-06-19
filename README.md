@@ -1,59 +1,57 @@
-# Kubernetes on AWS
-## Using Amazon Elastic Kubernetes Service
-Materials Created by me, [@vallard](https://twitter.com/vallard)
+# Real World Kubernetes
+This is a course with practical code examples about running Kubernetes in the real world.  
+
+This is a revamp of my somewhat popular O'Reilly class EKS in the data center.  I've taken feedback from the hundreds of people who have taken the class to make it more applicable to the real world.  
+
+The class is available on [O'Reilly's platform](https://learning.oreilly.com/home/).  If you have a log in you can search for my name (vallard) there and watch it.  If not, feel free to use this guide and read along. 
+
+This class is one giant demo, so you can probably follow the script easy and do this self paced. Pull requests are welcome if you see errors. 
+
+All content was created by me, [@vallard](https://twitter.com/vallard)
+
+
 
 ## Contents
 
-This repo is for a class I teach on using [EKS](https://aws.amazon.com/eks/).  This class assumes you have a basic idea and understanding about: 
+### Segment 01 - Setup & Stuff You'll Need
+* [Introduction](01/README.md) Read this if you want a background on Kubernetes, Containers, and just getting started. 
+* [Tools](01/tools.md) - Read this to get the tools you'll need to run these exercises. 
 
-* Python
-* AWS
-* Docker
-* Kubernetes - you should know at least a little about it. 
+### Segment 02 - Ignite EKS with Terraform
 
-The purpose of the class is to show how to get an EKS cluster up and running, do some administration, and then run some applications.  Finally we show how to integrate other AWS services (Lambda, DynamoDB) in with our EKS cluster. 
+* [Terraform](02/terraform.md)
+* [Terragrunt](02/terragrunt.md)
 
-### Segment 1 - Introduction / Foundations
-* [Introduction](segment01-intro/INTRO.md)
-* [Why Containers are a big deal](segment01-intro/containers.md)
-* [Trade Offs](segment01-intro/tradeoffs.md)
-* [Kubernetes in a Nutshell](segement01-intro/IANS.md)
-* [Clone Github Resources](segment01-intro/setup.md)
-* [Install `kubectl`](segment01-intro/kubectl.md)
+### Segment 03 - Rapid Cluster Exploration
 
+In this segment we'll go over some Kubernetes primitives.  We move fast, show what they are and what they do. 
 
-### Segment 2 - IAM
-* [Create IAM Resources with Terraform](segment02-iam/terraform.md)
-* [AWS User Setup](segment02-iam/aws-creds.md)
-* [Install `eksctl`](segment02-iam/eksctl.md)
+* [Exploration](03/README.md)
 
+### Segment 04 - Real World Use Cases
 
-### Segment 3 - Launch EKS
-* [Launch the EKS cluster with eksctl](segment03-install/eks.md)
-* [Launch EKS cluster manually](segment03-install/eks.md#EKS-Manually)
-* [`kubectl` access](segment03-install/eks.md#kubectl-Access)
-
-### Segment 4 - Cluster Verification
-* [Verify components and launch sample test application](segment04-verify/README.md)
+* [Load Balancers](04/ELB.md)
+* [Ingress Controllers](04/Ingress.md)
+* [Cert-Manager & Let's Encrypt](04/TLS.md)
+* [November Rain: Persistent volumes](04/PV.md)
+* [External Secrets with AWS SecretsManager](04/Secrets.md)
 
 
-### Segment 5 - Running Applications
-* [Loadbalancers](segement05-applications/ELB.md)
-* [Ingress](segment05-applications/Ingress.md)
-* [Configure R53 DNS to point to the ELB](segment05-applications/r53.md)
-* [TLS certificates](segement05-applications/TLS.md)
-* [Persistent Volumes](segment05-applications/PV.md)
+### Segment 05 - Boss Operations
 
-### Segment 6 - Cluster Lifecycle
-* [Cluster Autoscaling](segment06-admin/README.md)
-* [Horizontal Pod Autoscaling](segment06-admin/README.md#horizontal-pod-autoscaler)
-* [Kubernetes Dashboard](segment06-admin/README.md#kubernetes-dashboard)
-* [Add additional users to the cluster](segment06-admin/README.md#additional-user-access)
-* [Updating the cluster](segment06-admin/README.md#cluster-upgrades)
+* [Cluster Autoscaling](05/README.md)
+* [Lens & K9s](05/viz.md)
+* [Additional Users with Roles and RoleBindings](05/users.md)
 
-### Segment 7 - Connecting to additional AWS services
-* [Serverless with EKS](segmenet07-integrations/README.md)
-* [EKS DynamoDB example](segment07-integrations/dynamo-example/README.md)
+### Segment 06 - Putting it together:  Running Your Own App 
+
+* [Create a Python Flask Application from Scratch](06/README.md) 
+* [Makefiles, Dockers and Registries](06/README.md)
+* [Terraform for DynamoDB](06/README.md)
+* [Ta-da!  The app! 🎉](06/README.md)
+* [Service Accounts for DynamoDB access](06/README.md)
+
+
 
 
 
