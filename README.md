@@ -52,8 +52,6 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 * [Service Accounts for DynamoDB access](06/README.md)
 
 
-#### Segment 7 - Connecting to additional AWS services
-* [Summary and Incredible life changing words of wisdom](07/README.md)
 
 
 

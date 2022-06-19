@@ -1,0 +1,43 @@
+service: EKSless
+provider:
+  name: aws
+  runtime: python3.7
+  region: us-west-2
+  environment: 
+    ## Define the name of your EKS cluster you want the lambda function to be able to access
+    CLUSTER: "dec31"
+  ## define the role that this lambda function will run under.  This role should have access to 
+  ## be able to run kubectl commands. 
+  role: arn:aws:iam::188966951897:role/kubeLambda
+
+custom:
+  pythonRequirements:
+    useDownloadCache: true
+    useStaticCache: false
+    dockerizePip: non-linux
+    #dockerFile: ./Dockerfile
+    zip: true
+    slim: true
+    slimPatterns:
+      - "**/*.egg-info*"
+
+
+functions:
+  list:
+    handler: handler.list_deployments
+    events:
+      - http:
+          path: list
+          method: get
+          cors: true
+
+  create:
+    handler: handler.create_deployments
+    events:
+      - http:
+          path: create
+          method: post
+          cors: true
+
+plugins:
+  - serverless-python-requirements

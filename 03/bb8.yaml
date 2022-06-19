@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: bb8
+  name: bb8
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: bb8
+  template:
+    metadata:
+      labels:
+        run: bb8
+    spec:
+      containers:
+      - args:
+        - sleep
+        - "50000"
+        image: busybox
+        name: bb8
