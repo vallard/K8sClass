@@ -9,7 +9,7 @@
 # select the region you want to perform this operation in. 
 provider "aws" {
   profile = "cr"
-  region  = "us-west-1"
+  region  = "us-west-2"
 }
 
 ########################################################

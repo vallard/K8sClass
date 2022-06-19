@@ -1,4 +1,4 @@
-# Segment 4 - Verification
+# 03 - Exploring Kubernetes
 
 Now that cluster is up, you should have access to it using `kubectl` commands.  Let's take a look at our system.   
 

@@ -149,13 +149,18 @@ We add the cluster login permissions to the `config` file automatically by runni
 ```
 aws eks update-kubeconfig --name eks-demo-cluster
 ```
+Or
+
+```
+aws eks update-kubeconfig --name eks-stage --alias eks-stage --role-arn arn:aws:iam::188966951897:role/eks_dude_role
+```
 
 ### 2. Add the role
 
 But this is incomplete because we need to actually log in with the role that created the cluster.  This is done by adding the lines: 
 
 ```
- 		- --role-arn
+      - --role-arn
       - arn:aws:iam::188966951897:role/eks_dude_role
 ```
 
