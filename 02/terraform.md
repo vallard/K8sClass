@@ -121,6 +121,8 @@ aws eks list-clusters
 
 ## Create Network with Terraform 
 
+Do this as the `eksdude` user. 
+
 ```
 
 cd 02/terraform/network

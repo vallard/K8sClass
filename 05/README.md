@@ -219,6 +219,21 @@ You can now open dashboard at this super easy to remember URL:
 
 [http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/)
 
+## Lens
+
+Sweet graphical user interface.  Much better than default Kubernetes dashboard. [Lens](https://k8slens.dev/)
+
+## K9s
+
+Another cool command line tool for bastion access or when a GUI is unavailable is [k9s](https://k9scli.io/topics/install/).  
+
+
+On Mac: 
+
+```
+ brew install derailed/k9s/k9s
+```
+
 ## Additional user access
 
 With AWS you need to grant others access to your cluster.  To do this they must have the following: 

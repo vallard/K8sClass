@@ -75,7 +75,8 @@ An internal DNS service that allows pods to communicate.  For example, suppose w
 Let's create 2 pods and a service: 
 
 ```
-kubectl apply -f ./dnstest
+kubectl apply -f bb8.yaml
+kubectl apply -f ngx.yaml
 ```
 #### Note: the old version of deployments were in extension/v1beta1 have moved to app/v1 in version 16 of Kubernetes.
 

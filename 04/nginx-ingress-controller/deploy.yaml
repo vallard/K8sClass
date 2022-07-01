@@ -36,6 +36,10 @@ metadata:
   name: ingress-nginx-controller
   namespace: ingress-nginx
 data:
+  use-gzip: "true"
+  gzip-level: "7"
+  enable-brotli: "true"
+  brotli-level: "7"
 ---
 # Source: ingress-nginx/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1
