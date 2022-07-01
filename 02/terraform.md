@@ -52,16 +52,12 @@ Change (N)ame, (E)mail, or (O)kay/(Q)uit? O
 ```
 
 
-
-
 Once it is created you can export the base64 version of that key with: 
 
 ```
-gpg export <email of key> | base64
-# or
-gpg --export --armor $KEYID
+gpg --export engineering@castlerock.ai | base64 | pbcopy 
 ```
-This can be put inside the [iam.tf](./iam.tf) file.
+This can be put inside the [terraform/iam/vars.tf](./terraform/iam/vars.tf) file.
 
 ## Create IAM resources with Terraform
 
@@ -76,25 +72,6 @@ terraform apply
 
 You may wish to look at the [./iam.tf](./iam.tf) file where all of these resources are defined.  It may be you need to change some of the values.  Check out the comments in this file. 
 
-
-## Create Network with Terraform 
-
-```
-cd 02/terraform/network
-terraform init
-terraform plan 
-terraform apply
-```
-
-## Create EKS with Terraform
-
-```
-cd 02/terraform/eks
-terraform init
-terraform plan 
-terraform apply
-```
-
 ## User Sign in
 
 We created the user with our `iam.tf` and we can use the output to log in as the user.
@@ -105,6 +82,7 @@ Get the User Password for Console Sign in
 
 ```
 cd 02/iam
+export GPG_TTY=$(tty) # just to be sure. 
 terraform output -raw password | base64 --decode  | gpg --decrypt | pbcopy
 ```
 
@@ -136,6 +114,28 @@ export AWS_PROFILE=eksdude
 aws s3 ls
 aws ec2 describe-instances
 aws eks list-clusters
+```
+
+
+
+
+## Create Network with Terraform 
+
+```
+
+cd 02/terraform/network
+terraform init
+terraform plan 
+terraform apply
+```
+
+## Create EKS with Terraform
+
+```
+cd 02/terraform/eks
+terraform init
+terraform plan 
+terraform apply
 ```
 
 ## Log into EKS Cluster
