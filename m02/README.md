@@ -15,3 +15,21 @@ Modify the DNS name to match the Load Balancer
 ```
 kubectl apply -f cert-manager/prod-issuer.yaml
 ```
+
+
+## External Secrets
+
+We will also need external secrets to store our passwords for our application. 
+
+This includes database permissions, slack APIs, etc.  The cost to store this in AWS Secrets manager is $0.40/month.  
+
+
+```
+helm repo add external-secrets https://charts.external-secrets.io
+
+helm install external-secrets \
+   external-secrets/external-secrets \
+    -n kube-system \
+    --create-namespace \
+    --set installCRDs=true
+```

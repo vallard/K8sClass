@@ -5,24 +5,62 @@ metadata:
 data:
   K8S_DB_HOST: mariadb
   K8S_DB_PORT: "3306"
-  K8S_DB_DATABASE: vanilla
-  MYSQL_DATABASE: vanilla
-
 ---
-# you should never store your secrets in code even if they are base64 encoded.
-# I recommend using external-secrets operator with AWS secrets manager
-apiVersion: v1
-data:
-  K8S_DB_USERNAME: YWRtaW4=
-  K8S_DB_PASSWORD: MWYyZDFlMmU2N2Rm
-  MYSQL_USER: YWRtaW4=
-  MYSQL_ROOT_PASSWORD: MWYyZDFlMmU2N2Rm
-  MYSQL_PASSWORD: MWYyZDFlMmU2N2Rm
-
-kind: Secret
-metadata:
-  name: k8s-sample-db-secrets
-type: Opaque
+apiVersion: external-secrets.io/v1beta1
+kind: SecretStore
+metadata: 
+  name: my-aws-secrets
+spec:
+  provider: 
+    aws:
+      service: SecretsManager
+      region: us-west-2
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata: 
+  name:  k8s-sample-db-secrets
+spec: 
+  refreshInterval: "0"
+  secretStoreRef: 
+    name: my-aws-secrets
+    kind: SecretStore
+  target:
+    name: k8s-sample-db-secrets
+    creationPolicy: Owner
+  data:
+    - remoteRef:
+        key: sample-app-secret
+        property: SLACK_TOKEN
+      secretKey: SLACK_TOKEN
+    - remoteRef: 
+        key: sample-app-secret
+        property: K8S_DB_USERNAME
+      secretKey: K8S_DB_USERNAME
+    - remoteRef: 
+        key: sample-app-secret
+        property: K8S_DB_PASSWORD
+      secretKey: K8S_DB_PASSWORD
+    - remoteRef: 
+        key: sample-app-secret
+        property: MYSQL_USER
+      secretKey: MYSQL_USER
+    - remoteRef: 
+        key: sample-app-secret
+        property: MYSQL_ROOT_PASSWORD
+      secretKey: MYSQL_ROOT_PASSWORD
+    - remoteRef: 
+        key: sample-app-secret
+        property: MYSQL_PASSWORD
+      secretKey: MYSQL_PASSWORD
+    - remoteRef:
+        key: sample-app-secret 
+        property: K8S_DB_DATABASE
+      secretKey: K8S_DB_DATABASE
+    - remoteRef: 
+        key: sample-app-secret 
+        property: MYSQL_DATABASE
+      secretKey: MYSQL_DATABASE
 ---
 apiVersion: apps/v1
 kind: Deployment

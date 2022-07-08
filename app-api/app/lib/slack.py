@@ -7,7 +7,7 @@ import os
 class SlackClient:
     def __init__(self):
         self.slack_token = os.environ.get("SLACK_TOKEN")
-        self.default_channel = os.environ.get("SLACK_DEFAULT_CHANNEL")
+        self.default_channel = os.environ.get("SLACK_CHANNEL")
 
     def post_message(self, text, channel=None, blocks=None):
         headers = {
