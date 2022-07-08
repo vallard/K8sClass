@@ -10,7 +10,7 @@ kind: Deployment
 metadata:
   name: eks-dynamo
 spec:
-  replicas: 1
+  replicas: 2
   selector: 
     matchLabels:
       run: eks-dynamo

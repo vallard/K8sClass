@@ -1,0 +1,131 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8s-sample-db-cm
+data:
+  K8S_DB_HOST: mariadb
+  K8S_DB_PORT: "3306"
+  K8S_DB_DATABASE: vanilla
+  MYSQL_DATABASE: vanilla
+
+---
+# you should never store your secrets in code even if they are base64 encoded. 
+# I recommend using external-secrets operator with AWS secrets manager
+apiVersion: v1
+data:
+  K8S_DB_USERNAME: YWRtaW4=
+  K8S_DB_PASSWORD: MWYyZDFlMmU2N2Rm
+  MYSQL_USER: YWRtaW4=
+  MYSQL_ROOT_PASSWORD: MWYyZDFlMmU2N2Rm 
+  MYSQL_PASSWORD: MWYyZDFlMmU2N2Rm 
+
+kind: Secret
+metadata:
+  name: k8s-sample-db-secrets
+type: Opaque
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-sample-api
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      run: k8s-sample-api
+  template:
+    metadata:
+      labels: 
+        run: k8s-sample-api
+    spec:
+      #serviceAccountName: dynamo-users
+      containers:
+      - name: k8s-sample-api
+        image: 188966951897.dkr.ecr.us-west-2.amazonaws.com/k8s-sample/api
+        command: ["/code/run.sh"]
+        ports: 
+          - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: k8s-sample-db-secrets
+        - configMapRef: 
+            name: k8s-sample-db-cm
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: mariadb
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      k8s-app: mariadb
+  template:
+    metadata:
+      labels:
+        k8s-app: mariadb
+    spec:
+      containers:
+      - name: mariadb
+        image: mariadb:10.3.8
+        ports:
+          - containerPort: 3306
+        envFrom:
+        - secretRef:
+            name: k8s-sample-db-secrets
+        - configMapRef:
+            name: k8s-sample-db-cm
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: k8s-sample-api
+  name: k8s-sample-api
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: k8s-sample-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: mariadb
+  name: mariadb
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    k8s-app: mariadb
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+  name: k8s-sample-api
+spec:
+  tls:
+  - hosts:
+    - api.k8s.castlerock.ai
+    secretName: k8s-sample-api-tls-cert
+  rules:
+    - host: api.k8s.castlerock.ai
+      http:
+        paths:
+        - backend:
+            service: 
+              name: k8s-sample-api
+              port: 
+                number: 80
+          pathType: Prefix
+          path: "/"
+

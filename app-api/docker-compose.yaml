@@ -1,0 +1,31 @@
+version: "3.3"
+
+services:
+  ttw-api:
+    image: k8s-sample/api:latest
+    container_name: k8s-sample-api
+    depends_on:
+      - mariadb
+    command: /code/run.sh
+    ports:
+      - 80:80
+    environment:
+      - K8S_DB_HOST=mariadb
+      - K8S_DB_USERNAME=user
+      - K8S_DB_PASSWORD=asdf1234
+      - K8S_DB_PORT=3306
+      - K8S_DB_DATABASE=k8sdb
+    volumes:
+      - ./:/code/
+
+  mariadb:
+    image: mariadb:10.3.8
+    container_name: mariadb
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=asdf1234
+      - MYSQL_DATABASE=k8sdb
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=asdf1234
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci

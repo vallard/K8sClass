@@ -1,0 +1,16 @@
+alembic==1.7.6
+bcrypt==3.2.0
+fastapi==0.73.0
+databases[mysql]==0.5.5 
+passlib==1.7.4
+pydantic[email] ~= 1.9.0
+pymysql==0.9.3
+pytest==6.2.3
+python-dateutil ~= 2.8.2
+python-multipart==0.0.5
+python-jose==3.3.0
+requests ~= 2.27.1
+sqlalchemy ~= 1.4.31
+stripe ~= 2.65.0
+urllib3 ~= 1.26.8
+uvicorn ~= 0.17.5
