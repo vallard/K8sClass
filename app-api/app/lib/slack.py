@@ -6,11 +6,8 @@ import os
 
 class SlackClient:
     def __init__(self):
-        env = os.environ.get("TTW_ENV")
-        self.slack_token = "xoxb-2852756709600-2911375163009-ozDDY2ZV5FZmKFMOSDzSR4Uu"
-        self.default_channel = "C038UA8NLGN"
-        if env == "prod":
-            self.default_channel = "C02T4DGCZLG"
+        self.slack_token = os.environ.get("SLACK_TOKEN")
+        self.default_channel = os.environ.get("SLACK_DEFAULT_CHANNEL")
 
     def post_message(self, text, channel=None, blocks=None):
         headers = {
@@ -43,5 +40,4 @@ class SlackClient:
 if __name__ == "__main__":
     sc = SlackClient()
     message = "How are you today?"
-    channel = "C02T4DGCZLG"
-    pprint.pprint(sc.post_message(message, channel=channel))
+    pprint.pprint(sc.post_message(message))
