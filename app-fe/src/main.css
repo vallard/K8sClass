@@ -1,0 +1,42 @@
+body {
+	/*font-family: 'Nunito Sans', sans-serif; */
+}
+
+nav .navbar-nav li a {
+	color: #63bc46 !important;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+	background-color: #2673ac !important;
+	border-color: #2673ac !important;
+	color: #fff !important;
+}
+
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:visited {
+	background-color: #63bc46 !important;
+	border-color: #63bc46 !important;
+}
+
+.carousel-item {
+	height: 270px;
+}
+
+.carousel-item img {
+	position: absolute;
+	object-fit: cover;
+	top: 0;
+	left: 0;
+	min-width: 100%;
+}
+
+.destinationLink {
+	text-decoration: none;
+	color: #555;
+	font-weight: bold;
+}

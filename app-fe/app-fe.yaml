@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-sample-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: k8s-sample-fe
+  template:
+    metadata:
+      labels:
+        run: k8s-sample-fe
+    spec:
+      #serviceAccountName: dynamo-users
+      containers:
+        - name: k8s-sample-fe
+          image: 188966951897.dkr.ecr.us-west-2.amazonaws.com/k8s-sample/fe
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: k8s-sample-fe
+  name: k8s-sample-fe
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    run: k8s-sample-fe
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+  name: k8s-sample-fe
+spec:
+  tls:
+    - hosts:
+        - app.k8s.castlerock.ai
+      secretName: k8s-sample-app-tls-cert
+  rules:
+    - host: app.k8s.castlerock.ai
+      http:
+        paths:
+          - backend:
+              service:
+                name: k8s-sample-fe
+                port:
+                  number: 80
+            pathType: Prefix
+            path: "/"
