@@ -21,9 +21,8 @@ app.header = {}
 origins = [
     "http://localhost",
     "http://localhost:3000",
-    "https://pdxtotheworld.com",
-    "https://pdx.totheworld.app",
-    "https://www.pdx.totheworld.app",
+    "https://app.k8s.castlerock.ai",
+    "https://www.app.k8s.castlerock.ai",
 ]
 
 app.add_middleware(
