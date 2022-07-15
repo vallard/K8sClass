@@ -21,6 +21,7 @@ import requests
 
 router = APIRouter(tags=["auth"])
 
+
 @router.post("/auth/signup", response_model=schemas.users.User, status_code=201)  # 1
 def create_user_signup(
     *,
@@ -36,14 +37,12 @@ def create_user_signup(
             status_code=400,
             detail="The user with this email already exists in the system",
         )
-    new_user = schemas.users.UserCreate(
-        email=user_in.email, password=user_in.password
-    )
+    new_user = schemas.users.UserCreate(email=user_in.email, password=user_in.password)
     user = crud.user.create(db=db, obj_in=new_user)
     db.commit()
     db.refresh(user)
-    #sc = SlackClient()
-    #sc.post_message(f"New Customer signed up: {user.email}")
+    sc = SlackClient()
+    sc.post_message(f"New Customer signed up: {user.email}")
     return user
 
 

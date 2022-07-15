@@ -17,4 +17,7 @@ dependency "vpc" {
 inputs = {
   public_subnets = dependency.vpc.outputs.vpc.public_subnets
   k8s_version = 1.21
+  min_nodes = 1
+  desired_nodes = 3
+  max_nodes = 6
 }

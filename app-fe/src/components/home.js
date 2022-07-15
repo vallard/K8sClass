@@ -19,7 +19,7 @@ function Home() {
                                 Such a Rad App on Kubernetes
                                 <Emoji label="surf" emoji="🏄‍♀️" />
                             </h1>
-                            <div>
+                            <div className="text-center">
                                 {isAuthenticated ?
                                     <p className="display-6 lead text-green">
                                         <span className="fw-bold text-success">You are logged in!</span>

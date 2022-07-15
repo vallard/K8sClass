@@ -35,6 +35,10 @@ spec:
       secretKey: SLACK_TOKEN
     - remoteRef: 
         key: sample-app-secret
+        property: SLACK_CHANNEL
+      secretKey: SLACK_CHANNEL
+    - remoteRef: 
+        key: sample-app-secret
         property: K8S_DB_USERNAME
       secretKey: K8S_DB_USERNAME
     - remoteRef: 

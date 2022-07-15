@@ -6,8 +6,8 @@ import os
 
 class SlackClient:
     def __init__(self):
-        self.slack_token = os.environ.get("SLACK_TOKEN")
-        self.default_channel = os.environ.get("SLACK_CHANNEL")
+        self.slack_token = os.environ["SLACK_TOKEN"]
+        self.default_channel = os.environ["SLACK_CHANNEL"]
 
     def post_message(self, text, channel=None, blocks=None):
         headers = {
@@ -17,12 +17,19 @@ class SlackClient:
         if not channel:
             channel = self.default_channel
         body = {"token": self.slack_token, "text": text, "channel": channel}
-        print(self.slack_token)
-        return requests.post(
+        response = requests.post(
             "https://slack.com/api/chat.postMessage",
             headers=headers,
             json=body,
-        ).json()
+        )
+        if not response.ok:
+            raise Exception(response.text)
+        j = response.json()
+        # if you have scope issues, you can use this to debug
+        # if "error" in j:
+        #    pprint.pprint(j)
+        #    raise Exception(j["error"])
+
         """
 		data=json.dumps(
 			{

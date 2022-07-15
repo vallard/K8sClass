@@ -20,9 +20,9 @@ resource "aws_eks_node_group" "nodegroup" {
   node_role_arn   = local.iam_state.eks_node_group_role.arn
   subnet_ids      = var.public_subnets
   scaling_config {
-    desired_size = 2
-    max_size     = 6
-    min_size     = 1
+    desired_size = var.desired_nodes
+    max_size     = var.max_nodes
+    min_size     = var.min_nodes
   }
   instance_types = ["t3.small"]
 

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+---
+# secret for basic auth
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: htpasswd
+  namespace: monitoring
+data:
+  auth: Y2FzdGxlcm9jazokYXByMSRteWhncno4biR1RnJ3Qk91YWFoQ0xnWTVqTDE3YmQuCg==
