@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-notifiers-slack-prod
+  namespace: monitoring
+  labels:
+    grafana_notifier: "1"
+data:
+  notifiers-slack-prod.yaml: |-
+    # config file version
+    apiVersion: 1
+    notifiers:
+      - name: slack
+        type: slack
+        uid: QwYpzLaGz
+        secure_settings:
+          url: <webhook>

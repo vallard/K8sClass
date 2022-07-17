@@ -1,0 +1,102 @@
+# customize with: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+alertmanager:
+  enabled: true
+  baseURL: "https://alertmanager.k8s.castlerock.ai"
+  ingress:
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
+    hosts:
+      - alertmanager.k8s.castlerock.ai
+    tls:
+      - secretName: alertmanager-tls
+        hosts:
+          - alertmanager.k8s.castlerock.ai
+
+
+prometheus:
+  ingress:
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
+    hosts:
+      - prometheus.k8s.castlerock.ai
+    tls:
+      - secretName: prometheus-tls
+        hosts:
+          - prometheus.k8s.castlerock.ai
+
+  prometheusSpec:
+    retention: 14d
+    scrapeInterval: 30s
+    evaluationInterval: 30s
+    externalUrl: "https://prometheus.k8s.castlerock.ai"
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp2
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi # you probably want more for production
+
+# https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+grafana:
+  enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      kuernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+      nginx.ingress.kubernetes.io/auth-realm: "Enter Your Credentials"
+    hosts:
+      - grafana.k8s.castlerock.ai
+    tls:
+      - secretName: grafana-tls
+        hosts:
+          - grafana.k8s.castlerock.ai
+
+  defaultDashboardsEnabled: true
+  adminPassword: password
+  grafana.ini:
+    auth:
+      disable_login_form: true
+    auth.anonymous:
+      enabled: true
+      org_role: Admin
+    unified_alerting:
+      enabled: false
+    alerting:
+      enabled: true
+      execute_alerts: true
+    server:
+      domain: grafana.k8s.castlerock.ai
+      root_url: https://%(domain)s/
+  # grab dashboards from sidecars
+  sidecar:
+    enabled: true
+    dashboards:
+      label: grafana_dashboard
+      labelValue: 1
+      searchNamespace: monitoring
+      provider:
+        allowUiUpdates: true
+    datasources:
+      label: grafana_datasource
+      labelValue: 1
+      searchNamespace: monitoring
+    notifiers:
+      enabled: true
+      label: grafana_notifier
+      labelValue: 1
+      searchNamespace: monitoring

@@ -167,3 +167,48 @@ helm upgrade --install -n monitoring \
 	prometheus-community/kube-prometheus-stack \
 	--version 37.2.0
 ```
+
+Rate
+Error
+Duration
+
+Prometheus is polling architecture and goes to each target and scraps it. 
+
+Thanos is for cross Data Center metrics. We won't talk about that in this class but it is installed by default. 
+
+```
+Series == Metrics == Time Series
+```
+
+Two types: 
+
+* Counter - always going up. 
+* Gauge - Just a number
+
+Use Prometheus to find the data.
+
+Every metric has a label and a value. 
+
+## Explore the PromQL Dashboard
+
+Look at memory available: 
+
+```
+(node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)
+```
+
+![Prometheus](../images/mo/prom01.png)
+
+Now we could also make an alert based off free memory usage when it gets down to 85% used: 
+
+```
+(node_memory_MemFree_bytes) / (node_memory_MemTotal_bytes) < bool 0.15
+```
+
+This shows us when our memory usage is high. E.g: we are running out of memory.
+
+We can also see graphs of these queries by checking out the graph button
+
+![graph of free](../images/mo/prom02.png)
+
+This graph shows that our nodes are around 50% capacity in memory. 
