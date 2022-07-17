@@ -1,5 +1,5 @@
 # Real World Kubernetes
-This is a course with practical code examples about running Kubernetes in the real world.  
+This is a two part course with practical code examples about running Kubernetes in the real world.  If you want to learn how to run Kubernetes in the real world, this is the course to follow. 
 
 This is a revamp of my somewhat popular O'Reilly class EKS in the data center.  I've taken feedback from the hundreds of people who have taken the class to make it more applicable to the real world.  
 
@@ -11,7 +11,7 @@ All content was created by me, [@vallard](https://twitter.com/vallard)
 
 
 
-## Contents
+## Part 1 - Kubernetes Real World
 
 ### Segment 01 - Setup & Stuff You'll Need
 * [Introduction](01/README.md) Read this if you want a background on Kubernetes, Containers, and just getting started. 
@@ -52,6 +52,23 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 * [Service Accounts for DynamoDB access](06/README.md)
 
 
+## Part 2 - 🔭 Kubernetes Monitoring & Observability 
+
+### M01 - Basic Monitoring
+
+* [README](m01/README.md)
+
+### M02 - Slack App Integration
+
+* [README](m02/README.md)
+
+### M03 - Prometheus
+
+* [README](m03/README.md)
+
+### M04 - Grafana
+
+* [README](m04/README.md)
 
 
 
