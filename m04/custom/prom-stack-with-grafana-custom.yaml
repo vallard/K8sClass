@@ -83,6 +83,7 @@ grafana:
       root_url: https://%(domain)s/
     dashboards:
       default_home_dashboard_path: /tmp/dashboards/k8s-dashboard.json
+
   # grab dashboards from sidecars
   sidecar:
     enabled: true
