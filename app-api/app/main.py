@@ -10,13 +10,19 @@ import pprint
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from fastapi_utils.tasks import repeat_every
 from app.routers import base, user, auth
-from app.database import database
+from app.database import database, engine
 
 app = FastAPI()
 app.header = {}
 
+
+# PROMETHEUS (part 5)
+from prometheus_fastapi_instrumentator import Instrumentator
+from prometheus_client import Gauge
+
+# END PROMETHEUS (part 5)
 
 origins = [
     "http://localhost",
@@ -36,6 +42,22 @@ app.add_middleware(
 app.include_router(base.router)
 app.include_router(user.router)
 app.include_router(auth.router)
+
+# PREMETHEUS (part 5)
+@app.on_event("startup")
+def init_instrumentator():
+    """Setup prometheus instrumentation for the API"""
+    Instrumentator().instrument(app).expose(app)
+
+
+@app.on_event("startup")
+@repeat_every(seconds=30, wait_first=True)
+def periodic():
+    count = engine.execute("select count(id) from user").scalar()
+    Gauge("total_users", "Total Users").set(int(count))
+
+
+# END PROMETHEUS (part 5)
 
 
 @app.on_event("startup")

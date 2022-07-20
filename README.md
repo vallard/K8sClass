@@ -70,5 +70,11 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 
 * [README](m04/README.md)
 
+### M05 - Integrate Grafana/Prometheus in our Application
+
+* [README](m05/README.md)
+
+
+
 
 

@@ -129,6 +129,7 @@ spec:
     - port: 80
       protocol: TCP
       targetPort: 80
+      name: metrics
   selector:
     run: k8s-sample-api
 ---

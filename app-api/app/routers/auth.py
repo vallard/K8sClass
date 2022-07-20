@@ -21,6 +21,15 @@ import requests
 
 router = APIRouter(tags=["auth"])
 
+# PROMETHEUS (part 5)
+from prometheus_client import Counter
+
+SUCESSFUL_LOGIN_DETAILS = Counter(
+    "successful_login_details", "Successful login details"
+)
+FAILED_LOGIN_DETAILS = Counter("failed_login_details", "Failed login details")
+# END PROMETHEUS (part 5)
+
 
 @router.post("/auth/signup", response_model=schemas.users.User, status_code=201)  # 1
 def create_user_signup(
@@ -60,8 +69,14 @@ def login(
         db=db,
     )
     if not user:
+        # PROMETHEUS (part 5)
+        FAILED_LOGIN_DETAILS.inc()
+        # END PROMETHEUS (part 5)
         raise HTTPException(status_code=400, detail="Incorrect username or password")
 
+    # PROMETHEUS (part 5)
+    SUCESSFUL_LOGIN_DETAILS.inc()
+    # END PROMETHEUS (part 5)
     return {
         "access_token": create_access_token(sub=user.id),  # 4
         "token_type": "bearer",

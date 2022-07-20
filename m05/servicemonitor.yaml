@@ -1,0 +1,19 @@
+# monitor all apps with metrics port in the wg namespace.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: k8s-sample-api
+  labels:
+    # this label is necessary to prometheus picks up the service monitor
+    # from the helm chart we deploy.
+    release: kube-prom
+    app.kubernetes.io/instance: kube-prom
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      run: k8s-sample-api
+  endpoints:
+    - port: metrics
+      interval: 15s
+      scrapeTimeout: 15s
