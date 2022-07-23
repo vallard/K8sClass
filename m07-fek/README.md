@@ -7,7 +7,7 @@ Logging information from your applications to search, verify, and index on is a 
 
 * Fluentd - This is the workhorse that gathers the logs from the system and then forwards them on to a centralized place.  But it can do more than that, it can forward logs to multiple places, transform them in place, and do other fancy tricks. 
 * ElasticSearch (OpenSearch) - ElasticSearch is open source and the company behind them (Elastic) seemed to have issues with Amazon.  So Amazon forked it, and now offers OpenSearch.  Good or bad, this is what we'll use. 
-* Kibana - This is our dashboard for viewing the logs and keeping them sorted. 
+* Kibana - This is our dashboard for viewing the logs and keeping them sorted. OpenSearch calls this OpenSearch Dashboards. Pithy rebranding, but we'll just call it Kibana. 
 
 ## Installation and Configuration
 
@@ -52,8 +52,44 @@ You can see all the values that can be configured with:
 helm show values fluent/fluentd
 ```
 
+We modify to add the OpenSearch cluster in there to forward logs. 
+
 ```
 kubectl create ns fluentd
 helm upgrade --install -n fluentd fluentd -f values.yaml fluent/fluentd
 ```
 
+Make sure all the pods are up!
+
+```
+kubectl get pods -n fluentd
+NAME            READY   STATUS    RESTARTS   AGE
+fluentd-b4zf4   1/1     Running   0          2m34s
+fluentd-jkc2h   1/1     Running   0          117s
+fluentd-psxql   1/1     Running   0          2m37s
+fluentd-rvmlb   1/1     Running   0          2m10s
+```
+
+There is good documentation on the [fluentd opensearch plugin](https://github.com/fluent/fluent-plugin-opensearch) as to how to configure this for your cluster. 
+
+## Viewing Logs
+
+Now we can log back into Kibana and examine the logs that are created.  
+
+### Create an index
+
+![](../images/mo/fek02.png)
+
+You should see our fluent logs starting to flow in.  We'll make an index with `fluentd-` to capture all our fluentd logs. 
+
+For timestamp we'll use `@timestamp` that we are forwarding. 
+
+Once complete we have an index!
+
+### View logs in `Discover`
+
+I usually spend most of my time in the `Discover` section of Kibana, though there are cool dashbaords you could probably create.  Most of the time we are looking to figure out what is happening with our application.  
+
+To start our FEK stack up, we just set up the basics and monitored everything.  (That is what the `**` does in the first part of the dashboard.).  However, what we can do is create some logging in our application that will log transactions in OpenSearch.  That's what we will do in the next section. 
+
+![](../images/mo/fek03.png)
