@@ -10,11 +10,19 @@ resource "aws_security_group" "cluster" {
   description = "Opensearch security groups for ${var.env}"
   vpc_id      = var.vpc_id
 
+  # fluentd sends logs through 443
   ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = var.vpc_cidr_blocks
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [var.eks_security_group_id]
+  }
+  # To access kibana from the external network we use 80
+  ingress {
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [var.eks_security_group_id]
   }
 }
 

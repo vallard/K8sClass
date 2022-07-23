@@ -27,3 +27,8 @@ variable "vpc_cidr_blocks" {
   type        = list(string)
   description = "VPC CIDR blocks to use for the Opensearch cluster"
 }
+
+variable "eks_security_group_id" {
+  type        = string
+  description = "EKS security group to use for the Opensearch cluster, we use this to allow EKS to access opensearch"
+}
