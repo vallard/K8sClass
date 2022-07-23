@@ -3,5 +3,6 @@ output "vpc" {
     "vpc_id" : module.vpc_example_simple-vpc.vpc_id
     "public_subnets" : module.vpc_example_simple-vpc.public_subnets
     "private_subnets" : module.vpc_example_simple-vpc.private_subnets
+    "private_subnets_cidr_blocks" : module.vpc_example_simple-vpc.private_subnets_cidr_blocks
   }
 }
