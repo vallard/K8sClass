@@ -74,6 +74,18 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 
 * [README](m05/README.md)
 
+### M06 - CloudWatch Alarms
+
+* [README](m06/README.md)
+
+### M07 - FEK Stack
+
+* [README](m07-fek/README.md)
+
+### M08 - Application Logging
+
+* [README](m08-app-logging/README.md)
+
 
 
 

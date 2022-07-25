@@ -1,7 +1,3 @@
-import os
-import json
-from re import I
-from webbrowser import get
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from app.database import get_db
@@ -20,7 +16,6 @@ from typing import Any
 import requests
 
 router = APIRouter(tags=["auth"])
-
 # PROMETHEUS (part 5)
 from prometheus_client import Counter
 
@@ -29,6 +24,11 @@ SUCESSFUL_LOGIN_DETAILS = Counter(
 )
 FAILED_LOGIN_DETAILS = Counter("failed_login_details", "Failed login details")
 # END PROMETHEUS (part 5)
+
+
+# Fluent (part 8)
+logger = logging.getLogger("api.auth")
+# END Fluent (part 8)
 
 
 @router.post("/auth/signup", response_model=schemas.users.User, status_code=201)  # 1
@@ -51,6 +51,7 @@ def create_user_signup(
     db.commit()
     db.refresh(user)
     sc = SlackClient()
+    logger.info(f"New User has signed up: {user.email}")
     sc.post_message(f"New Customer signed up: {user.email}")
     return user
 
@@ -72,11 +73,19 @@ def login(
         # PROMETHEUS (part 5)
         FAILED_LOGIN_DETAILS.inc()
         # END PROMETHEUS (part 5)
+        # Fluent (part 8)
+        logger.warning(f"Failed login attempt: %s", {form_data.username})
+        # END Fluent (part 8)
+
         raise HTTPException(status_code=400, detail="Incorrect username or password")
 
     # PROMETHEUS (part 5)
     SUCESSFUL_LOGIN_DETAILS.inc()
     # END PROMETHEUS (part 5)
+
+    # Fluent (part 8)
+    logger.info(f"User {user.email} has logged in")
+    # END Fluent (part 8)
     return {
         "access_token": create_access_token(sub=user.id),  # 4
         "token_type": "bearer",

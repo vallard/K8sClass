@@ -24,6 +24,17 @@ from prometheus_client import Gauge
 
 # END PROMETHEUS (part 5)
 
+
+# Fluent (part 8)
+from app.lib.app_logging import setup_logging
+
+setup_logging("api")
+import logging
+
+logger = logging.getLogger("api")
+logger.info("HELLO LOGGING!")
+# End fluent (part 8)
+
 origins = [
     "http://localhost",
     "http://localhost:3000",

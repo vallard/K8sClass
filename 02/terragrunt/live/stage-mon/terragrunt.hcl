@@ -6,7 +6,7 @@ remote_state {
   }
   config = {
     bucket = "k8sclass-tf-state"
-    key = "stage/${path_relative_to_include()}/terraform.tfstate"
+    key = "stage-mon/${path_relative_to_include()}/terraform.tfstate"
     region = "us-west-2"
     encrypt = true
   }

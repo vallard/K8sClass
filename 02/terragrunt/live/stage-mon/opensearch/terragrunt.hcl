@@ -11,11 +11,11 @@ terraform {
 }
 
 dependency "vpc" {
-  config_path = "../../../live/stage//vpc"
+  config_path = "..//vpc"
 }
 
 dependency "eks" {
-  config_path = "../../../live/stage//eks"
+  config_path = "..//eks"
 }
 
 inputs = {

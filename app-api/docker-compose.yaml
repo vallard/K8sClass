@@ -31,3 +31,10 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=asdf1234
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  fluentd:
+    image: fluentd
+    container_name: fluentd
+    ports: 
+      - 24224
+
