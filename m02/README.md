@@ -6,11 +6,11 @@ If you haven't done the first modules in the first class, then we need to quickl
 
 ```
 cd 04
-apply -f nginx-ingress-controller/deploy.yaml
+kubectl apply -f nginx-ingress-controller/deploy.yaml
 kubectl apply -f cert-manager/cert-manager.yaml
 ```
 
-Modify the DNS name to match the Load Balancer
+Modify the DNS name to match the Load Balancer. This is done in Route53. 
 
 ```
 kubectl apply -f cert-manager/prod-issuer.yaml
@@ -26,7 +26,6 @@ This includes database permissions, slack APIs, etc.  The cost to store this in 
 
 ```
 helm repo add external-secrets https://charts.external-secrets.io
-
 helm install external-secrets \
    external-secrets/external-secrets \
     -n kube-system \
@@ -35,7 +34,7 @@ helm install external-secrets \
 ```
 
 
-## Modifying the application for Slack
+## Application Slack Integration
 
 We first need to create a Slack Application and get a token for posting to our Slack messages. 
 
@@ -108,5 +107,33 @@ This will run locally.  To get the front end locally, open another browser and r
 yarn install
 yarn start
 ```
+
+## Installing to Kubernetes
+
+There is a yaml file we can use, be sure to edit to use your own domain.  Also ensure your secrets are set inside AWS secrets manager.  You can run: 
+
+```
+kubectl apply -f app-api/app-api.yaml
+```
+
+The front end, similarly can be applied with: 
+
+```
+kubectl apply -f app-fe/app-fe.yaml
+```
+
+You can get the urls with 
+
+```
+kubectl get ing -A
+```
+
+When we login we can now see alerts in Slack. 
+
+![](../images/mo/m02-rad-app.png)
+
+## Module 2 Summary
+
+In this module we learned how to make a slack client, robot, and receive alerts.  The important part that relates to Kubernetes is how you can store the secrets for accessing in Kubernetes without compromising by storing secrets in code. 
 
 

@@ -57,10 +57,17 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 ### M01 - Basic Monitoring
 
 * [README](m01/README.md)
+* [Metrics API](m01/README.md#03.-Metrics-API)
+* [Lens](m01/README.md#04.-Basic-Monitoring-with-lens)
+* [k9s](m01/README.md#05.-k9s)
 
 ### M02 - Slack App Integration
 
 * [README](m02/README.md)
+* [Setup app for Kubernetes](m02/README.md#basic-application)
+* [External Secretst](m02/README.md#external-secrets)
+* [Application Slack Integration](m02/README.md#applicattion-slack-integration)
+* [Application Kubernetes Deployment](m02/README.md#
 
 ### M03 - Prometheus
 

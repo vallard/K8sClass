@@ -48,6 +48,7 @@ But we would like to customize this first.
 
 First, we'd like to put everything in a `monitoring` namespace so we can keep it all in one go. So we'll create the namespace in a yaml file. 
 
+
 ### Basic Authentication
 
 We'd like to protect our data with some authentication even though it may not be the most secure.  To do that we can generate an `.htpasswd` file.  Let's do that online by entering a user and a password.  
