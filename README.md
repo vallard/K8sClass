@@ -81,6 +81,9 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 
 * [Intro](m04/README.md)
 * [Customization](m04/README.md#customizations)
+* [Grafana Slack Alerts](m04/README.md#adding-slack)
+* [Create New Dashboard](m04/README.md#$add-a-new-dashboard)
+* [Persist Changes](m04/README.md#persist-new-dashboard)
 
 ### M05 - Integrate Grafana/Prometheus in our Application
 
