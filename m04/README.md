@@ -13,6 +13,46 @@ helm upgrade --install -n monitoring \
 
 ## Customizations
 
+We add some customizations by looking at the values in the [helm chart](https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml). 
+
+```yaml
+defaultDashboardsEnabled: true
+  adminPassword: password
+  grafana.ini:
+    auth:
+      disable_login_form: true
+    auth.anonymous:
+      enabled: true
+      org_role: Admin
+    unified_alerting:
+      enabled: false
+    alerting:
+      enabled: true
+      execute_alerts: true
+    server:
+      domain: grafana.k8s.castlerock.ai
+      root_url: https://%(domain)s/
+    dashboards:
+      default_home_dashboard_path: /tmp/dashboards/k8s-dashboard.json
+  # grab dashboards from sidecars
+  sidecar:
+    enabled: true
+    dashboards:
+      label: grafana_dashboard
+      labelValue: 1
+      searchNamespace: monitoring
+      provider:
+        allowUiUpdates: true
+    datasources:
+      label: grafana_datasource
+      labelValue: 1
+      searchNamespace: monitoring
+    notifiers:
+      enabled: true
+      label: grafana_notifier
+      labelValue: 1
+      searchNamespace: monitoring
+```
 
 ## Logging In
 
@@ -25,8 +65,9 @@ These are great because they are installed by default.
 
 ## Adding Slack
 
+Edit the `slack-notifier.yaml` file and add in a webhook URL so that alerts can be triggered. 
+
 ```
-cd custom/
 kubectl apply -f slack-notifier.yaml
 ```
 
@@ -44,6 +85,8 @@ This gives us an alert in slack
 ![](../images/mo/grafana03.png)
 
 Now we can set an alarm if something goes bad to notify us in slack. 
+
+Similarly, we can put one in for PagerDuty to alert us when things don't go as expected. 
 
 ## Add a New Dashboard
 

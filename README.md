@@ -67,15 +67,20 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 * [Setup app for Kubernetes](m02/README.md#basic-application)
 * [External Secretst](m02/README.md#external-secrets)
 * [Application Slack Integration](m02/README.md#applicattion-slack-integration)
-* [Application Kubernetes Deployment](m02/README.md#
+* [Application Kubernetes Deployment](m02/README.md#installing-to-kubernetes)
 
 ### M03 - Prometheus
 
-* [README](m03/README.md)
+* [Intro](m03/README.md)
+* [Installation](m03/README.md#installation)
+* [Customization](m03/README.md#customization)
+* [Explore PromQL](m03/README.md#explore-the-promql-dashbooard)
+
 
 ### M04 - Grafana
 
-* [README](m04/README.md)
+* [Intro](m04/README.md)
+* [Customization](m04/README.md#customizations)
 
 ### M05 - Integrate Grafana/Prometheus in our Application
 
