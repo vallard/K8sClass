@@ -11,14 +11,14 @@ To do this we follow the [instructions](https://docs.aws.amazon.com/eks/latest/u
 ```
 aws eks update-cluster-config \
     --region us-west-2 \
-    --name eks-stage \
+    --name eks-stage-mon \
     --logging '{"clusterLogging":[{"types":["api","audit","authenticator","controllerManager","scheduler"],"enabled":true}]}'
 ```
 
 ## Analyzing metrics in Cloud Watch
 
 
-We visit (CloudWatch)[https://console.aws.amazon.com/cloudwatch/home#logs:prefix=/aws/eks] and search for the prefix `/aws/eks`.  This should show all our clusters. 
+We visit [CloudWatch](https://console.aws.amazon.com/cloudwatch/home#logs:prefix=/aws/eks) and search for the prefix `/aws/eks`.  This should show all our clusters. 
 
 
 There are several different logs we can see: 
@@ -51,5 +51,5 @@ In future classes we may add how to do this explicitly to this section.
 
 aws eks update-cluster-config \
     --region us-west-2 \
-    --name eks-stage \
+    --name eks-stage-mon \
     --logging '{"clusterLogging":[{"types":["api","audit","authenticator","controllerManager","scheduler"],"enabled":false}]}'

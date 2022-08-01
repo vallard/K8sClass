@@ -1,0 +1,47 @@
+service:
+  ports: 
+   - name: "forwarder"
+     protocol: TCP
+     containerPort: 24224
+
+
+plugins:
+  - fluent-plugin-opensearch
+
+fileConfigs:
+  04_outputs.conf: |-
+    <label @OUTPUT>
+      <match ** >
+        @type opensearch
+        host vpc-opensearch-stage-mon-fhdhhs2ktec5zddpepkno2ereu.us-west-2.es.amazonaws.com
+        port 443
+        ssl_verify false
+        logstash_format true
+        ssl_version TLSv1_2
+        logstash_prefix fluentd
+        include_timestamp true
+        scheme https
+      </match>
+    </label>
+  05_myapp.conf: |-
+    <source>
+      @type forward
+      port 24224
+    </source>
+    <match myapp.**>
+      @type copy
+      <store>
+        @type opensearch
+        @log_level info
+        hosts https://vpc-opensearch-stage-mon-fhdhhs2ktec5zddpepkno2ereu.us-west-2.es.amazonaws.com:443
+        ssl_verify false
+        ssl_version TLSv1_2
+        logstash_format true
+        logstash_prefix fluentd
+        include_timestamp true
+        reload_connections false
+        <buffer>
+          flush_interval 5s
+        </buffer>
+      </store>
+    </match>

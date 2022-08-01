@@ -1,4 +1,4 @@
-# The FEK Stack
+# The EFK Stack
 
 Logging information from your applications to search, verify, and index on is a great idea and gives added visibility.  In a production environment developers are constantly looking at logs to analyze user behavior, what went wrong, and find ways to improve the system. 
 
@@ -33,7 +33,7 @@ This lets us login with our standard username/password and now we can visit:
 
 ![open search dashboard](../images/mo/fek01.png)
 
-There's not much to see in here right now because there is
+There's not much to see in here right now because there isn't data being exported to it from fluent!
 
 
 

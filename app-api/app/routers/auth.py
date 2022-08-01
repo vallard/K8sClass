@@ -10,6 +10,7 @@ from app.core.auth import (
     create_access_token,
 )
 from app.lib.slack import SlackClient
+from app.lib.app_logging import setup_logging
 from sqlalchemy.orm import Session
 import logging
 from typing import Any
@@ -27,7 +28,7 @@ FAILED_LOGIN_DETAILS = Counter("failed_login_details", "Failed login details")
 
 
 # Fluent (part 8)
-logger = logging.getLogger("api.auth")
+logger = setup_logging()
 # END Fluent (part 8)
 
 

@@ -87,7 +87,12 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 
 ### M05 - Integrate Grafana/Prometheus in our Application
 
-* [README](m05/README.md)
+* [Intro](m05/README.md)
+* [FastAPI and Prometheus](m05/README.md#fastapi-and-prometheus)
+* [Prometheus client](m05/README.md#prometheus-client)
+* [Scraping](m05/README.md#scraping)
+* [Grafana Integration](m05/README.md#grafana-integration)
+* [Persistence](m05/README.md#adding-persistence)
 
 ### M06 - CloudWatch Alarms
 
@@ -95,7 +100,11 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 
 ### M07 - FEK Stack
 
-* [README](m07-fek/README.md)
+* [Intro](m07-fek/README.md#components)
+* [Configuration](m07-fek/README.md#installation-and-configuration)
+* [Fluentd](m07-fek/README.md#fluentd)
+* [Kibana](m07-fek/README.md#viewing-logs)
+
 
 ### M08 - Application Logging
 

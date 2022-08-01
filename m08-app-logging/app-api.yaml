@@ -87,6 +87,11 @@ spec:
           command: ["/code/run.sh"]
           ports:
             - containerPort: 80
+          env: 
+            - name: FLUENTD_HOST
+              value: "fluentd.fluentd"
+            - name: FLUENTD_PORT
+              value: "24224"
           envFrom:
             - secretRef:
                 name: k8s-sample-db-secrets

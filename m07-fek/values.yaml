@@ -6,7 +6,7 @@ fileConfigs:
     <label @OUTPUT>
       <match ** >
         @type opensearch
-        host vpc-opensearch-stage-woesdamvqbli5siagd7guw7ubi.us-west-2.es.amazonaws.com
+        host vpc-opensearch-stage-mon-fhdhhs2ktec5zddpepkno2ereu.us-west-2.es.amazonaws.com
         port 443
         ssl_verify false
         logstash_format true

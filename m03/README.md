@@ -213,3 +213,23 @@ We can also see graphs of these queries by checking out the graph button
 ![graph of free](../images/mo/prom02.png)
 
 This graph shows that our nodes are around 50% capacity in memory. 
+
+## Kube-Proxy
+
+As part of the set up the `kube-proxy` in EKS doesn't work.  We have to patch this: 
+
+```
+kubectl edit cm kube-proxy-config -n kube-system
+## Change from
+    metricsBindAddress: 127.0.0.1:10249 ### <--- Too secure
+## Change to
+    metricsBindAddress: 0.0.0.0:10249
+```
+
+Then restart the `kube-proxies`: 
+
+```
+kubectl rollout restart ds kube-proxy -n kube-system
+```
+
+(credit: [alternaivan](https://github.com/prometheus-community/helm-charts/issues/977#issuecomment-888161858)

@@ -13,6 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_utils.tasks import repeat_every
 from app.routers import base, user, auth
 from app.database import database, engine
+from app.lib.app_logging import setup_logging
 
 app = FastAPI()
 app.header = {}
@@ -25,14 +26,8 @@ from prometheus_client import Gauge
 # END PROMETHEUS (part 5)
 
 
-# Fluent (part 8)
-from app.lib.app_logging import setup_logging
-
-setup_logging("api")
-import logging
-
-logger = logging.getLogger("api")
-logger.info("HELLO LOGGING!")
+logger = setup_logging()
+logger.info("Hello, world!")
 # End fluent (part 8)
 
 origins = [
@@ -65,6 +60,7 @@ def init_instrumentator():
 @repeat_every(seconds=30, wait_first=True)
 def periodic():
     count = engine.execute("select count(id) from user").scalar()
+    logger.info(f"Number of users: {count}")
     Gauge("total_users", "Total Users").set(int(count))
 
 
