@@ -291,7 +291,8 @@ resource "aws_iam_role" "eks_dude_role" {
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonEC2FullAccess",
     aws_iam_policy.iamPassRole.arn,
-    aws_iam_policy.EKSFullAccess.arn
+    aws_iam_policy.EKSFullAccess.arn,
+    "arn:aws:iam::aws:policy/AmazonOpenSearchServiceFullAccess", 
   ]
 }
 

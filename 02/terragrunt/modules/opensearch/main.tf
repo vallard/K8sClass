@@ -1,5 +1,9 @@
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
+locals {
+  iam_state = data.terraform_remote_state.iam.outputs.iam
+}
+
 
 resource "aws_iam_service_linked_role" "cluster" {
   aws_service_name = "opensearchservice.amazonaws.com"
