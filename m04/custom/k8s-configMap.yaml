@@ -45,7 +45,7 @@ data:
               {
                 "evaluator": {
                   "params": [
-                    0.9
+                    0.85
                   ],
                   "type": "gt"
                 },

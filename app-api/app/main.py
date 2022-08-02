@@ -23,6 +23,8 @@ app.header = {}
 from prometheus_fastapi_instrumentator import Instrumentator
 from prometheus_client import Gauge
 
+TOTAL_USERS = Gauge("total_users", "Total users")
+
 # END PROMETHEUS (part 5)
 
 
@@ -49,7 +51,7 @@ app.include_router(base.router)
 app.include_router(user.router)
 app.include_router(auth.router)
 
-# PREMETHEUS (part 5)
+# PROMETHEUS (part 5)
 @app.on_event("startup")
 def init_instrumentator():
     """Setup prometheus instrumentation for the API"""
@@ -61,7 +63,7 @@ def init_instrumentator():
 def periodic():
     count = engine.execute("select count(id) from user").scalar()
     logger.info(f"Number of users: {count}")
-    Gauge("total_users", "Total Users").set(int(count))
+    TOTAL_USERS.set(int(count))
 
 
 # END PROMETHEUS (part 5)
