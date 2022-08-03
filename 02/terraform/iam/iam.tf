@@ -107,13 +107,16 @@ data "aws_iam_policy_document" "iamPassRole" {
       "iam:CreateInstanceProfile",
       "iam:CreateOpenIDConnectProvider",
       "iam:DeleteOpenIDConnectProvider",
-      "iam:ListAttachedRolePolicies"
+      "iam:ListAttachedRolePolicies",
+      "iam:DeleteServiceLinkedRole",
+      "iam:GetServiceLinkedRoleDeletionStatus",
     ]
     resources = [
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*",
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/oidc.eks.us-west-2.amazonaws.com",
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/oidc.eks.us-west-2.amazonaws.com/*",
-      "arn:aws:ssm:*"
+      "arn:aws:ssm:*",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/opensearchservice.amazonaws.com/AWSServiceRoleForAmazonOpenSearchService"
     ]
   }
 }
