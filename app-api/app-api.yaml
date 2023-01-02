@@ -30,11 +30,11 @@ spec:
     creationPolicy: Owner
   data:
     - remoteRef:
-        key: sample-app-secret
+        key: super_slack_secrets
         property: SLACK_TOKEN
       secretKey: SLACK_TOKEN
     - remoteRef: 
-        key: sample-app-secret
+        key: super_slack_secrets
         property: SLACK_CHANNEL
       secretKey: SLACK_CHANNEL
     - remoteRef: 

@@ -19,5 +19,5 @@ inputs = {
   k8s_version = 1.22
   min_nodes = 1
   desired_nodes = 3
-  max_nodes = 6
+  max_nodes = 7
 }

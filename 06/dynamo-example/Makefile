@@ -2,6 +2,10 @@
 
 all: build push 
 
+
+dev: 
+	docker run -v ${PWD}/app:/app -d -p 8011:80 vallard/eks-dynamo 
+
 build:
 	docker build -t vallard/eks-dynamo .
 

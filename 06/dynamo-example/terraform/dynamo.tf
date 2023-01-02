@@ -32,6 +32,11 @@ resource "aws_dynamodb_table_item" "dynamoUsers" {
   "id": {"S": "12345"},
   "email" : {"S": "mal@auradon.kingdom" },
   "name" : {"S": "Mal" }
+},
+{
+  "id": {"S": "45"},
+  "email" : {"S": "queenofmean@auradon.kingdom" },
+  "name" : {"S": "QueenOfmean" }
 }
 EOF
 }
