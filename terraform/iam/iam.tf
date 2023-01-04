@@ -125,6 +125,8 @@ data "aws_iam_policy_document" "iamPassRole" {
       "iam:ListInstanceProfilesForRole",
       "iam:UpdateOpenIDConnectProviderThumbprint",
       "iam:UpdateAssumeRolePolicy",
+      "iam:DeletePolicyVersion",
+      "iam:DeletePolicyVersions",
     ]
     resources = [
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*",
