@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: awscli
+  labels:
+    app: awscli
+  namespace: kube-system 
+spec:
+  serviceAccountName: cluster-autoscaler
+  containers:
+  - image: amazon/aws-cli
+    command:
+      - "sleep"
+      - "604800"
+    imagePullPolicy: IfNotPresent
+    name: awscli
+  restartPolicy: Always

@@ -9,7 +9,7 @@ Let's Encrypt provides free automated TLS certificates for all of our applicatio
 To install its as simple as: 
 
 ```
-$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.yaml
+$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.10.0/cert-manager.yaml
 ```
 
 To see what was installed run: 
@@ -51,7 +51,7 @@ Now to create the TLS certificate on our application we just modify the ingress 
 Take a look at `ngx-ing.yaml` in the same directory.  You will see a few small changes: 
 
 ```
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -68,9 +68,14 @@ spec:
     - host: k8s.castlerock.ai
       http:
         paths:
-        - backend:
-            serviceName: ngx
-            servicePort: 80
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: ngx
+                port:
+                  number: 80
+
 ```
 
 The changes are: 

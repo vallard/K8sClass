@@ -19,7 +19,7 @@ spec:
       labels: 
         run: eks-dynamo
     spec:
-      #serviceAccountName: dynamo-users
+      #serviceAccountName: dynamo
       containers:
       - name: eks-dynamo
         image: 188966951897.dkr.ecr.us-west-2.amazonaws.com/vallard/eks-dynamo:latest

@@ -5,7 +5,7 @@ metadata:
     run: bb8
   name: bb8
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       run: bb8
