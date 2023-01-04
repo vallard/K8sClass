@@ -8,7 +8,7 @@
 # https://www.terraform.io/docs/providers/aws/index.html
 # select the region you want to perform this operation in. 
 provider "aws" {
-  region  = "us-west-2"
+  region = "us-west-2"
 }
 
 ########################################################
@@ -98,6 +98,14 @@ data "aws_iam_policy_document" "iamPassRole" {
       "iam:PassRole",
       "iam:GetRole",
       "iam:CreateServiceLinkedRole",
+      "iam:CreatePolicy",
+      "iam:CreatePolicyVersion",
+      "iam:GetPolicy",
+      "iam:ListPolicies",
+      "iam:GetPolicyVersion",
+      "iam:ListPolicyVersion",
+      "iam:ListPolicyVersions",
+      "iam:DeletePolicy",
       "iam:CreateRole",
       "iam:DeleteRole",
       "iam:AttachRolePolicy",
@@ -110,15 +118,26 @@ data "aws_iam_policy_document" "iamPassRole" {
       "iam:ListAttachedRolePolicies",
       "iam:DeleteServiceLinkedRole",
       "iam:GetServiceLinkedRoleDeletionStatus",
+      "iam:TagOpenIDConnectProvider",
+      "iam:GetOpenIDConnectProvider",
+      "iam:DeleteOpenIDConnectProvider",
+      "iam:ListRolePolicies",
+      "iam:ListInstanceProfilesForRole",
+      "iam:UpdateOpenIDConnectProviderThumbprint",
+      "iam:UpdateAssumeRolePolicy",
+      "iam:DeletePolicyVersion",
+      "iam:DeletePolicyVersions",
     ]
     resources = [
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*",
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/oidc.eks.us-west-2.amazonaws.com",
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/oidc.eks.us-west-2.amazonaws.com/*",
       "arn:aws:ssm:*",
-      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/opensearchservice.amazonaws.com/AWSServiceRoleForAmazonOpenSearchService"
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/opensearchservice.amazonaws.com/AWSServiceRoleForAmazonOpenSearchService",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/*"
     ]
   }
+
 }
 
 resource "aws_iam_policy" "iamPassRole" {
@@ -295,7 +314,7 @@ resource "aws_iam_role" "eks_dude_role" {
     "arn:aws:iam::aws:policy/AmazonEC2FullAccess",
     aws_iam_policy.iamPassRole.arn,
     aws_iam_policy.EKSFullAccess.arn,
-    "arn:aws:iam::aws:policy/AmazonOpenSearchServiceFullAccess", 
+    "arn:aws:iam::aws:policy/AmazonOpenSearchServiceFullAccess",
   ]
 }
 

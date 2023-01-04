@@ -22,6 +22,16 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 ```
 This will create resources in the `ingress-nginx` name space. 
 
+We've updated the configMap to make it compress the output for better performance of our applications.  The configMap has this now: 
+
+```
+data:
+  use-gzip: "true"
+  gzip-level: "7"
+  enable-brotli: "true"
+  brotli-level: "7"
+```
+
 Running: 
 
 ```
@@ -51,7 +61,8 @@ This `yaml` file creates a deployment of an application called `kuard` which jus
 We have a domain called [castlerock.ai](https://castlerock.ai) that we can use for this service.  Let's create an ingress rule.  The file in this directory called `ngx-ing.yaml` has the information below: 
 
 ```
-apiVersion: extensions/v1beta1
+---
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -62,9 +73,14 @@ spec:
     - host: k8s.castlerock.ai
       http:
         paths:
-        - backend:
-            serviceName: ngx
-            servicePort: 80
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: ngx
+                port: 
+                  number: 80
+
 ```
 
 The rule here shows that anytime the host is `k8s.castlerock.ai` it will route to our ngx service.  

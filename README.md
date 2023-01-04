@@ -1,5 +1,15 @@
-# Real World Kubernetes
+# 🌎Real World Kubernetes
 This is a two part course with practical code examples about running Kubernetes in the real world.  If you want to learn how to run Kubernetes in the real world, this is the course to follow. 
+
+## 👴🏼Older Course Material
+I gave several courses on O'Reilly's platform and you may be looking for the code here and find it's organized slightly differently than you might expect it to be.  You can get the old stuff by doing: 
+
+```
+git checkout 0f7dd1cb39
+```
+You should then see all the older README and files. Alternatively you can just [browse at that point on Github here.](https://github.com/vallard/K8sClass/tree/621895ec47b37706d82424814a458c6933008081)
+
+## ✨Introduction to the newer course
 
 This is a revamp of my somewhat popular O'Reilly class EKS in the data center.  I've taken feedback from the hundreds of people who have taken the class to make it more applicable to the real world.  
 
@@ -32,9 +42,9 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 
 * [Load Balancers](04/ELB.md)
 * [Ingress Controllers](04/Ingress.md)
+* [Route53 Configureation](04/r53.md)
 * [Cert-Manager & Let's Encrypt](04/TLS.md)
 * [November Rain: Persistent volumes](04/PV.md)
-* [External Secrets with AWS SecretsManager](04/Secrets.md)
 
 
 ### Segment 05 - Boss Operations

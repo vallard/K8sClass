@@ -43,6 +43,14 @@ There are other storage classes we could make too if we needed faster speed or n
 
 To take advantage of this storage class, we can create a persistent volume claim. 
 
+## Adding the EBS CSI Driver
+
+Before Kubernetes 1.23 the AWS block storage driver was part of Kubernetes, or it was "in-tree".  Well, times have changed and now we have to install it ourselves. The official documentation is [here](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html)
+
+I've already included this in as part of the Terraform module but you may need to change the OIDC thumbprint if there are issues.  See [this documentation](https://aws.amazon.com/premiumsupport/knowledge-center/eks-error-invalid-identity-token/) on how this is done!
+
+
+
 ## Persistent Volume Claims
 
 We can request storage to be provisioned for us automatically with the persistent volume claim.  This is a yaml file that looks as follows: 

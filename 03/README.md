@@ -75,6 +75,7 @@ An internal DNS service that allows pods to communicate.  For example, suppose w
 Let's create 2 pods and a service: 
 
 ```
+cd 03/
 kubectl apply -f bb8.yaml
 kubectl apply -f ngx.yaml
 ```
