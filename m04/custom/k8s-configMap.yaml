@@ -5,8 +5,6 @@ metadata:
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
-  #annotations:
-    #grafana_folder: "MY-DASHBOARD-FOLDER"
 data:
   k8s-dashboard.json: |-
     {

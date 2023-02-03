@@ -14,4 +14,4 @@ data:
         type: slack
         uid: QwYpzLaGz
         secure_settings:
-          url: 
+          url: <your webhook here>

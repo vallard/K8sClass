@@ -41,7 +41,6 @@ metadata:
     kubernetes.io/ingress.class: nginx
   name: k8s-sample-fe
 spec:
-  ingressClassName: nginx
   tls:
     - hosts:
         - app.k8s.castlerock.ai
