@@ -8,7 +8,7 @@ Grafana is already part of the Prometheus stack we installed in the previous sec
 helm upgrade --install -n monitoring \
 	kube-prom -f prom-stack-with-grafana.yaml \
 	prometheus-community/kube-prometheus-stack \
-	--version 37.2.0
+	--version 44.3.0
 ```
 
 ## Customizations
@@ -145,7 +145,7 @@ Doing this allows us to have a custom first page dashboard.
 helm upgrade --install -n monitoring \
 	kube-prom -f prom-stack-with-grafana-custom.yaml \
 	prometheus-community/kube-prometheus-stack \
-	--version 37.2.0
+	--version 44.3.0
 ```
 
 Now we have our default dashboard as our starter home page for Grafana, and we are getting alerts!

@@ -8,21 +8,21 @@ data:
 ---
 apiVersion: external-secrets.io/v1beta1
 kind: SecretStore
-metadata: 
+metadata:
   name: my-aws-secrets
 spec:
-  provider: 
+  provider:
     aws:
       service: SecretsManager
       region: us-west-2
 ---
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
-metadata: 
-  name:  k8s-sample-db-secrets
-spec: 
+metadata:
+  name: k8s-sample-db-secrets
+spec:
   refreshInterval: "0"
-  secretStoreRef: 
+  secretStoreRef:
     name: my-aws-secrets
     kind: SecretStore
   target:
@@ -30,39 +30,39 @@ spec:
     creationPolicy: Owner
   data:
     - remoteRef:
-        key: my-secrets
+        key: super-secrets
         property: SLACK_TOKEN
       secretKey: SLACK_TOKEN
-    - remoteRef: 
-        key: my-secrets
+    - remoteRef:
+        key: super-secrets
         property: SLACK_CHANNEL
       secretKey: SLACK_CHANNEL
-    - remoteRef: 
-        key: my-secrets
+    - remoteRef:
+        key: super-secrets
         property: K8S_DB_USERNAME
       secretKey: K8S_DB_USERNAME
-    - remoteRef: 
-        key: my-secrets
+    - remoteRef:
+        key: super-secrets
         property: K8S_DB_PASSWORD
       secretKey: K8S_DB_PASSWORD
-    - remoteRef: 
-        key: my-secrets
+    - remoteRef:
+        key: super-secrets
         property: MYSQL_USER
       secretKey: MYSQL_USER
-    - remoteRef: 
-        key: my-secrets
+    - remoteRef:
+        key: super-secrets
         property: MYSQL_ROOT_PASSWORD
       secretKey: MYSQL_ROOT_PASSWORD
-    - remoteRef: 
-        key: my-secrets
+    - remoteRef:
+        key: super-secrets
         property: MYSQL_PASSWORD
       secretKey: MYSQL_PASSWORD
     - remoteRef:
-        key: my-secrets 
+        key: super-secrets
         property: K8S_DB_DATABASE
       secretKey: K8S_DB_DATABASE
-    - remoteRef: 
-        key: my-secrets 
+    - remoteRef:
+        key: super-secrets
         property: MYSQL_DATABASE
       secretKey: MYSQL_DATABASE
 ---
@@ -92,7 +92,7 @@ spec:
                 name: k8s-sample-db-secrets
             - configMapRef:
                 name: k8s-sample-db-cm
-            
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -156,6 +156,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
   name: k8s-sample-api
 spec:
+  ingressClassName: nginx
   tls:
     - hosts:
         - api.k8s.castlerock.ai

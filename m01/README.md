@@ -52,7 +52,7 @@ cd ../cert-manager
 k apply -f cert-manager.yaml 
 k apply -f prod-issuer.yaml 
 cd ../
-k apply default-backend.yaml 
+k apply -f default-backend.yaml 
 ```
 
 Now go to Route 53 and associate the domain with the ingress controller.  This a manual thing. 

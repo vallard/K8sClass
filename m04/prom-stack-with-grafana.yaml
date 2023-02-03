@@ -10,6 +10,7 @@ alertmanager:
       nginx.ingress.kubernetes.io/auth-type: basic
       nginx.ingress.kubernetes.io/auth-secret: htpasswd
       nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
+    ingressClassName: nginx
     hosts:
       - alertmanager.k8s.castlerock.ai
     tls:
@@ -26,6 +27,7 @@ prometheus:
       nginx.ingress.kubernetes.io/auth-type: basic
       nginx.ingress.kubernetes.io/auth-secret: htpasswd
       nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
+    ingressClassName: nginx
     hosts:
       - prometheus.k8s.castlerock.ai
     tls:
@@ -54,10 +56,11 @@ grafana:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-      kuernetes.io/ingress.class: nginx
+      kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/auth-type: basic
       nginx.ingress.kubernetes.io/auth-secret: htpasswd
       nginx.ingress.kubernetes.io/auth-realm: "Enter Your Credentials"
+    ingressClassName: nginx
     hosts:
       - grafana.k8s.castlerock.ai
     tls:

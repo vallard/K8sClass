@@ -14,4 +14,4 @@ data:
         type: slack
         uid: QwYpzLaGz
         secure_settings:
-          url: https://hooks.slack.com/services/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
+          url: 

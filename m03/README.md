@@ -201,7 +201,7 @@ Every metric has a label and a value.
 Look at memory available: 
 
 ```
-(node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)
+(node_memory_MemAvailable_bytes) / (node_memory_MemTotal_bytes)
 ```
 
 ![Prometheus](../images/mo/prom01.png)
