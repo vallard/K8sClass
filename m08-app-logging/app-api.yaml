@@ -30,39 +30,39 @@ spec:
     creationPolicy: Owner
   data:
     - remoteRef:
-        key: sample-app-secret
+        key: super-secrets
         property: SLACK_TOKEN
       secretKey: SLACK_TOKEN
     - remoteRef: 
-        key: sample-app-secret
+        key: super-secrets
         property: SLACK_CHANNEL
       secretKey: SLACK_CHANNEL
     - remoteRef: 
-        key: sample-app-secret
+        key: super-secrets
         property: K8S_DB_USERNAME
       secretKey: K8S_DB_USERNAME
     - remoteRef: 
-        key: sample-app-secret
+        key: super-secrets
         property: K8S_DB_PASSWORD
       secretKey: K8S_DB_PASSWORD
     - remoteRef: 
-        key: sample-app-secret
+        key: super-secrets
         property: MYSQL_USER
       secretKey: MYSQL_USER
     - remoteRef: 
-        key: sample-app-secret
+        key: super-secrets
         property: MYSQL_ROOT_PASSWORD
       secretKey: MYSQL_ROOT_PASSWORD
     - remoteRef: 
-        key: sample-app-secret
+        key: super-secrets
         property: MYSQL_PASSWORD
       secretKey: MYSQL_PASSWORD
     - remoteRef:
-        key: sample-app-secret 
+        key: super-secrets 
         property: K8S_DB_DATABASE
       secretKey: K8S_DB_DATABASE
     - remoteRef: 
-        key: sample-app-secret 
+        key: super-secrets 
         property: MYSQL_DATABASE
       secretKey: MYSQL_DATABASE
 ---

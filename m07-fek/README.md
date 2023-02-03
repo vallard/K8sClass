@@ -55,8 +55,7 @@ helm show values fluent/fluentd
 We modify to add the OpenSearch cluster in there to forward logs. 
 
 ```
-kubectl create ns fluentd
-helm upgrade --install -n fluentd fluentd -f values.yaml fluent/fluentd
+helm upgrade --install -n fluentd fluentd -f values.yaml fluent/fluentd --create-namespace
 ```
 
 Make sure all the pods are up!

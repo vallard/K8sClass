@@ -6,7 +6,6 @@ alertmanager:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-      kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/auth-type: basic
       nginx.ingress.kubernetes.io/auth-secret: htpasswd
       nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
@@ -23,7 +22,6 @@ prometheus:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-      kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/auth-type: basic
       nginx.ingress.kubernetes.io/auth-secret: htpasswd
       nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
@@ -56,7 +54,6 @@ grafana:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-      kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/auth-type: basic
       nginx.ingress.kubernetes.io/auth-secret: htpasswd
       nginx.ingress.kubernetes.io/auth-realm: "Enter Your Credentials"
