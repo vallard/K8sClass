@@ -16,7 +16,7 @@ services:
       - K8S_DB_PORT=3306
       - K8S_DB_DATABASE=k8sdb
       - SLACK_TOKEN=${SLACK_TOKEN}
-      - SLACK_CHANNEL=C03NPPVGR3R
+      - SLACK_CHANNEL=${SLACK_CHANNEL}
     volumes:
       - ./:/code/
 

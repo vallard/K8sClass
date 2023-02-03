@@ -1,40 +1,9 @@
 # Basic Application
 
-We need to get our application ready so we can see about application alerts. 
-
-If you haven't done the first modules in the first class, then we need to quickly get the cluster to be able to hold an application: 
-
-```
-cd 04
-kubectl apply -f nginx-ingress-controller/deploy.yaml
-kubectl apply -f cert-manager/cert-manager.yaml
-```
-
-Modify the DNS name to match the Load Balancer. This is done in Route53. 
-
-```
-kubectl apply -f cert-manager/prod-issuer.yaml
-```
+We need to get our application ready so we can see about application alerts.  First, we'll create a slack channel and slack bot then we'll store the secrets in AWS secrets manager, then we'll access the secrets using the [External Secrets Operator](https://external-secrets.io/v0.7.2/).
 
 
-## External Secrets
-
-We will also need external secrets to store our passwords for our application. 
-
-This includes database permissions, slack APIs, etc.  The cost to store this in AWS Secrets manager is $0.40/month.  
-
-
-```
-helm repo add external-secrets https://charts.external-secrets.io
-helm install external-secrets \
-   external-secrets/external-secrets \
-    -n kube-system \
-    --create-namespace \
-    --set installCRDs=true
-```
-
-
-## Application Slack Integration
+## Create A Slack Application
 
 We first need to create a Slack Application and get a token for posting to our Slack messages. 
 
@@ -57,7 +26,7 @@ You should add:
 * `chat:write`
 * `chat:write:public` - this way you can write to any channels in the workspace. 
 
-We now should have the `Bot User OAuth Token` on this same page.  This is the token we will save in our environment as `SLACK_TOKEN`.  We also need to create a channel and then get the channel so we can post there.  
+Create a  `Bot User OAuth Token` on this same page.  This is the token we will save in our environment as `SLACK_TOKEN`.  We also need to create a channel and then get the channel so we can post there.  
 
 This is done by right clicking on a channel's info button and copying the channel id)
 
@@ -66,6 +35,8 @@ This is done by right clicking on a channel's info button and copying the channe
 Clicking in the channel information button you can get the Channel ID down at the bottom. 
 
 ![Get Channel ID](../images/mo/slack02.png)
+
+## Store Slack environment locally
 
 For development I put these in my `~/.zshrc` or `~/.bash_profile` (depending on shell) so it looks like: 
 
@@ -107,6 +78,53 @@ This will run locally.  To get the front end locally, open another browser and r
 yarn install
 yarn start
 ```
+## Secrets in Kubernetes
+
+Now that we can run locally need to store these passwords for our application. We will use External Secrets with Secrets Manager.  
+
+We can store all our secrets in one place; database permissions, slack APIs, etc.  The cost to store this in AWS Secrets manager is $0.40/month.  
+
+### Create Secret in Secrets manager
+
+We will add our Slack tokens to a file called `secrets.json`. In this file there are also other secrets we'll use for our application for passwords and connecting to our database.  Edit this file to include your slack token and change your database password if needed.  If using something else for a database later on (like RDS) you can put these credentials as well.  
+
+### Upload to AWS
+
+We can upload by running the command: 
+
+```
+aws secretsmanager create-secret --name super-secrets --secret-string file://secrets.json
+```
+
+Open up secrets manager on the console and verify it looks good (e.g: There are values for each of the secrets defined). 
+
+### Install External Secrets
+
+```
+helm repo add external-secrets https://charts.external-secrets.io
+helm repo update
+helm install external-secrets \
+   external-secrets/external-secrets \
+    -n kube-system \
+    --create-namespace \
+    --set installCRDs=true
+```
+
+Now we'll need to create a secret that we'll use to store the following information about our application: 
+
+* Database connection details (host, password, etc)
+* Slack Secrets
+
+
+### Clean up (For after class)
+
+When you are done secrets manager makes you wait a minimum of 7 days to delete the secret if you do it from the console. I'm guessing they've had a fare amount of angry customers who deleted their secrets and needed them 2 min after they deleted. That's good, but we prefer to instead do this from the cli so it happens instantly:
+
+```
+aws secretsmanager delete-secret --secret-id arn:aws:secretsmanager:us-west-2:188966951897:secret:super_slack_secrets-31HOxE --force-delete-without-recovery
+```
+
+$0.40 isn't much, but I don't think Amazon needs more money from me :-) 
 
 ## Installing to Kubernetes
 
