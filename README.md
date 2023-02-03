@@ -120,7 +120,9 @@ In this segment we'll go over some Kubernetes primitives.  We move fast, show wh
 
 * [README](m08-app-logging/README.md)
 
+### Clean up
 
+* [README](m09-cleanup/README.md)
 
 
 
