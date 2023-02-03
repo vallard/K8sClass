@@ -34,10 +34,10 @@ helm search repo  prometheus-community
 
 While there are component based repos that can be installed we will use `prometheus-community/kube-prometheus-stack`.  
 
-To install vanilla we would run: 
+To install vanilla we would run something like: 
 
 ```
-helm install prometheus-community/kube-prometheus-stack --version 37.2.0
+helm install -n monitoring kube-prom prometheus-community/kube-prometheus-stack --version 44.3.0
 ```
 
 But we would like to customize this first. 
@@ -166,12 +166,18 @@ Let's install this configuration:
 helm upgrade --install -n monitoring \
 	kube-prom -f prometheus.yaml \
 	prometheus-community/kube-prometheus-stack \
-	--version 37.2.0
+	--version 44.3.0
 ```
 
-Rate
-Error
-Duration
+We should now be able to visit the site to see it!
+
+```
+kubectl get ing -A
+```
+This should show you what URLs you have to visit. In my case it's 
+
+[https://prometheus.k8s.castlerock.ai](https://prometheus.k8s.castlerock.ai)
+
 
 Prometheus is polling architecture and goes to each target and scraps it. 
 
@@ -214,7 +220,7 @@ We can also see graphs of these queries by checking out the graph button
 
 This graph shows that our nodes are around 50% capacity in memory. 
 
-## Kube-Proxy
+## Kube-Proxy (Older versions, fixed in Kuberenetes >=1.24)
 
 As part of the set up the `kube-proxy` in EKS doesn't work.  We have to patch this: 
 
@@ -232,4 +238,4 @@ Then restart the `kube-proxies`:
 kubectl rollout restart ds kube-proxy -n kube-system
 ```
 
-(credit: [alternaivan](https://github.com/prometheus-community/helm-charts/issues/977#issuecomment-888161858)
+(credit: [alternaivan](https://github.com/prometheus-community/helm-charts/issues/977#issuecomment-888161858))
