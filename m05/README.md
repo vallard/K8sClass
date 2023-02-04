@@ -139,6 +139,11 @@ Click `Apply` to see this in our main dashboard.
 * Add a new query with the failed logins metric: `sum(rate(failed_login_details_total[1m]))`
 * Make it red and update the legend to show `Failed Logins`
 
+Note: We could also not do the rate if we just want to see what it looks like in general
+
+```
+sum(successful_login_details_total) 
+```
 
 ![](../images/mo/m05-04.png)
 

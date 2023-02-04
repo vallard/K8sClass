@@ -6,7 +6,7 @@
  k delete -f m08-app-logging/app-api.yaml
  helm uninstall -n fluentd fluentd
  k delete ns fluentd
- ```
+```
 
 ## m07
 
@@ -25,7 +25,7 @@ k delete -f m05/k8s-configMap.yaml
 ## m03 clean up
 
 ```
-helm uinstall -n monitoring kube-prom
+helm uninstall -n monitoring kube-prom
 k delete -f m03/supporting.yaml
 ```
 
